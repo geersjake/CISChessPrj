@@ -29,4 +29,10 @@ public class Bishop extends ChessPiece {
         return validMove;
     }
     //TYLER CHANGE
+    //Test1
+
+
+    //TEST2
+
+    //test4
 }
