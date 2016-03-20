@@ -26,13 +26,18 @@ public class ChessPanel extends JPanel {
 
 
         center.setLayout(new GridLayout(model.getNumRows(),model.getNumCol()));
-
+        int count = 1;
         for (int row = 0; row < model.getNumRows(); row++){
             for (int col = 0; col < model.getNumCol(); col++){
                 board[row][col] = new JButton("");
                 board[row][col].addActionListener(buttonListener);
                 board[row][col].setPreferredSize(new Dimension(50,50));
                 center.add(board[row][col]);
+
+                if (count % 2 == 0)
+                    board[row][col].setBackground(Color.blue);
+                if(!(col == 7))
+                    count++;
             }
         }
 
@@ -52,62 +57,62 @@ public class ChessPanel extends JPanel {
 
                         if (model.pieceAt(row, col).player() == Player.WHITE){    // need to add icons still
                             board[row][col].setText("Rw");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("R Rook.png"));
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK){
                             board[row][col].setText("Rb");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("B Rook.png"));
                         }
                     }
                     if (model.pieceAt(row, col).type().equals("Knight")){
                         if (model.pieceAt(row, col).player() == Player.WHITE){
                             board[row][col].setText("Kw");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("R Knight.png"));
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK){
                             board[row][col].setText("Kb");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("B Knight.png"));
                         }
                     }
                     if (model.pieceAt(row, col).type().equals("Bishop")){
                         if (model.pieceAt(row, col).player() == Player.WHITE){
                             board[row][col].setText("Bw");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("R Bishop.png"));
 
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK){
                             board[row][col].setText("Bb");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("B Bishop.png"));
                         }
                     }
                     if (model.pieceAt(row, col).type().equals("King")){
                         if (model.pieceAt(row, col).player() == Player.WHITE){
                             board[row][col].setText("Kw");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("R King.png"));
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK){
                             board[row][col].setText("Kb");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("B King.png"));
                         }
                     }
                     if (model.pieceAt(row, col).type().equals("Queen")){
                         if (model.pieceAt(row, col).player() == Player.WHITE){
                             board[row][col].setText("Qw");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("R Queen.png"));
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK){
                             board[row][col].setText("Qb");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("B Queen.png"));
                         }
                     }
                     if (model.pieceAt(row, col).type().equals("Pawn")){
                         if (model.pieceAt(row, col).player() == Player.WHITE){
                             board[row][col].setText("Pw");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("R Pawn.png"));
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK){
                             board[row][col].setText("Pb");
-                            board[row][col].setIcon(new ImageIcon());
+                            board[row][col].setIcon(new ImageIcon("B Pawn.png"));
                         }
                     }
                 }
