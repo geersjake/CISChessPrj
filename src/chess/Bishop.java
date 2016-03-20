@@ -28,5 +28,5 @@ public class Bishop extends ChessPiece {
         //fix in step 8
         return validMove;
     }
-    //checking if changes can be made
+    //TYLER CHANGE
 }
