@@ -9,6 +9,8 @@ package chess;
  *
  **********************************************************************/
 
+import javax.swing.*;
+
 /**
  * Created by tylerfaulk on 2/29/16.
  */
@@ -23,7 +25,8 @@ public class ChessModel implements IChessModel {
     public ChessModel() {
         numRows = 8;
         numCol = 8;
-        //instantiate player?
+        player = Player.BLACK;
+        //Instantiate player
         board = new IChessPiece[8][8];
 
         board[0][0] = new Rook(player.WHITE);     // adding all of the pieces onto the board
@@ -73,11 +76,13 @@ public class ChessModel implements IChessModel {
 
     public void move(Move move) {
         if(isValidMove(move)){ //not sure if condition is necessary
-            board[move.fromRow][move.fromColumn] = board[move.toRow][move.toColumn];
+            board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
+            board[move.fromRow][move.fromColumn] = null;
+            JOptionPane.showMessageDialog(null, "Valid Move");
         }
         else{
-            System.out.println("move is not valid"); // remove if condition is not necessary
-        }
+            JOptionPane.showMessageDialog(null, "This is not a valid move");
+       }
     }
 
     public boolean inCheck(Player p) {

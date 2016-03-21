@@ -29,11 +29,12 @@ public abstract class ChessPiece implements IChessPiece {
 
     public boolean isValidMove(Move move, IChessPiece[][] board) {
         boolean validMove = false;
-        if(move.fromColumn != move.toColumn && move.toRow != move.fromRow){
-            if (board[move.fromRow][move.fromColumn].equals(board)) {
-                if(this.player() != board[move.fromRow][move.fromColumn].player() ){
+        if(move.fromColumn != move.toColumn || move.toRow != move.fromRow){
+            if (this == board[move.fromRow][move.fromColumn]) {
+
+                //if(this.owner != board[move.toRow][move.toColumn].player() ){
                     validMove = true;
-                }
+                //}
             }
         }
         return validMove;

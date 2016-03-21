@@ -26,11 +26,13 @@ public class Queen extends ChessPiece {
     public boolean isValidMove(Move move, IChessPiece[][] board) {
         boolean validMove = false;
         if(super.isValidMove(move, board)){
-            if(move.toRow == move.fromRow+1){ //add code to allow for a two space move on the pawns first move
-                if(move.toColumn == move.fromColumn){
+                if(move.toRow == move.fromRow || move.toColumn == move.fromColumn){
                     validMove = true;
                 }
-            }
+                if(Math.abs(move.fromRow - move.toRow) == Math.abs(move.fromColumn - move.toColumn)){
+                    validMove = true;
+                }
+
             //Needs proper row and col
         }
         return validMove;
