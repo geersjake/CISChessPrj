@@ -71,16 +71,13 @@ public class ChessModel implements IChessModel {
     public boolean isValidMove(Move move) {
         boolean validMove = false;
 
-        if ((firstMove == true) && (this.pieceAt(move.fromRow, move.fromColumn).player() == Player.BLACK)) {
+        if ((firstMove == true) && (board[move.fromRow][move.fromColumn].player() == Player.BLACK)) {
             JOptionPane.showMessageDialog(null, "Red Goes First");
             validMove = false; //not necessary
             firstMove = false;
-        } else {
-            if (board[move.fromRow][move.fromColumn].isValidMove(move, board)) { //i have no idea what this is doing or if it works
-                validMove = true;
-                firstMove = false;
-            }
-
+        } else if (board[move.fromRow][move.fromColumn].isValidMove(move, board)) { //i have no idea what this is doing or if it works
+            validMove = true;
+            firstMove = false;
         }
 
         return validMove;

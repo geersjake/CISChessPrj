@@ -9,8 +9,6 @@ package chess;
  *
  **********************************************************************/
 
-import javax.swing.*;
-
 /**
  * Created by tylerfaulk on 2/29/16.
  */
@@ -20,6 +18,9 @@ public class Pawn extends ChessPiece {
         super(player);
     }
 
+
+    private boolean firstMove = true;
+
     @Override
     public String type() {
         return "Pawn";
@@ -28,14 +29,31 @@ public class Pawn extends ChessPiece {
     @Override
     public boolean isValidMove(Move move, IChessPiece[][] board) {
         boolean validMove = false;
-        if(super.isValidMove(move, board)){
-            if(move.toRow == move.fromRow+1 || move.toRow == move.fromRow-1){
-                if(move.toColumn == move.fromColumn){
-                    validMove = true;           //add code to allow for a two space move on the pawns first move
+        if (this.isFirstMove()) {
+            if (super.isValidMove(move, board)) {
+                if (move.toColumn == move.fromColumn) {
+                    if (this.player() == Player.WHITE) {
+                        if (move.toRow == move.fromRow + 1 || move.toRow == move.fromRow + 2) {
+                            validMove = true;
+                            this.setFirstMove(false);
+                        }
+                    } else if (this.player() == Player.BLACK) {
+                        if (move.toRow == move.fromRow - 1 || move.toRow == move.fromRow - 2) {
+                            validMove = true;
+                            this.setFirstMove(false);
+                        }
+                    }
                 }
             }
-
         }
         return validMove;
+    }
+
+    public boolean isFirstMove() {
+        return firstMove;
+    }
+
+    public void setFirstMove(boolean firstMove) {
+        this.firstMove = firstMove;
     }
 }
