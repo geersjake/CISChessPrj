@@ -31,9 +31,10 @@ public abstract class ChessPiece implements IChessPiece {
         boolean validMove = false;
         if(move.fromColumn != move.toColumn || move.toRow != move.fromRow){
             if (this == board[move.fromRow][move.fromColumn]) {
-                if(this.player() != board[move.toRow][move.toColumn].player() ){
+
+                //if(this.owner != board[move.toRow][move.toColumn].player() ){
                     validMove = true;
-                }
+                //}
             }
         }
         return validMove;

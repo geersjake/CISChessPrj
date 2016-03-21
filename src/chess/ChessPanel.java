@@ -151,7 +151,6 @@ public class ChessPanel extends JPanel {
                             return;
                         }
                     }
-
                 }
             }
             if (firstClick == false) {

@@ -15,7 +15,18 @@ public class Knight extends ChessPiece {
 
     @Override
     public boolean isValidMove(Move move, IChessPiece[][] board) {
+        int changeRow;
+        int changeCol;
         boolean validMove = false;
+        changeRow = Math.abs(move.fromRow - move.toRow);
+        changeCol = Math.abs(move.fromColumn - move.toColumn);
+        if (changeRow == 1 || changeRow == 2){
+            if (changeCol == 1 || changeCol == 2) {
+                if (changeRow != changeCol);
+                validMove = true;
+            }
+
+        }
         //fix in step 8
         return validMove;
     }

@@ -26,16 +26,10 @@ public class King extends ChessPiece {
     public boolean isValidMove(Move move, IChessPiece[][] board) {
         boolean validMove = false;
         if(super.isValidMove(move, board)){
-            if((move.toRow == move.fromRow+1)||(move.toRow == move.fromRow-1)
-                    || (move.toColumn == move.fromColumn+1)||(move.toColumn == move.fromColumn-1)
-                    || ((move.toRow == move.fromRow+1)&&(move.toColumn == move.fromColumn+1))
-                    || ((move.toRow == move.fromRow+1)&&(move.toColumn == move.fromColumn-1))
-                    || ((move.toRow == move.fromRow-1)&&(move.toColumn == move.fromColumn+1))
-                    || ((move.toRow == move.fromRow-1)&&(move.toColumn == move.fromColumn-1))){
-                //We may want to shorten this if with probable a loop
-                if(move.toColumn == move.fromColumn){
-                    validMove = true;
-                }
+          if (Math.abs(move.fromRow - move.toRow) == 0 || Math.abs(move.fromRow - move.toRow) == 1){
+              if (Math.abs(move.fromColumn - move.toColumn) == 0 || Math.abs(move.fromColumn - move.toColumn) == 1){
+                  validMove = true;
+              }
                 //Test
             }
 

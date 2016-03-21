@@ -25,7 +25,8 @@ public class ChessModel implements IChessModel {
     public ChessModel() {
         numRows = 8;
         numCol = 8;
-        //instantiate player?
+        player = Player.BLACK;
+        //Instantiate player
         board = new IChessPiece[8][8];
 
         board[0][0] = new Rook(player.WHITE);     // adding all of the pieces onto the board
@@ -66,7 +67,6 @@ public class ChessModel implements IChessModel {
     }
 
     public boolean isValidMove(Move move) {
-        JOptionPane.showMessageDialog(null, "IsValid was called");
         boolean validMove = false;
         if(board[move.fromRow][move.fromColumn].isValidMove(move, board)){ //i have no idea what this is doing or if it works
             validMove = true;
@@ -78,9 +78,10 @@ public class ChessModel implements IChessModel {
         if(isValidMove(move)){ //not sure if condition is necessary
             board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
             board[move.fromRow][move.fromColumn] = null;
+            JOptionPane.showMessageDialog(null, "Valid Move");
         }
         else{
-            System.out.println("move is not valid"); // remove if condition is not necessary
+            JOptionPane.showMessageDialog(null, "This is not a valid move");
        }
     }
 

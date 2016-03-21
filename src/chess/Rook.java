@@ -29,8 +29,6 @@ public class Rook extends ChessPiece {
             if(move.toRow == move.fromRow || move.toColumn == move.fromColumn){
                 validMove = true;
             }
-
-
         }
         return validMove;
     }
