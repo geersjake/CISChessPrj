@@ -175,7 +175,12 @@ public class ChessPanel extends JPanel {
                             firstClick = true;
                             mover.toRow = row;
                             mover.toColumn = col;
-                            model.move(mover);
+                            try {
+                                model.move(mover);
+                            } catch (NullPointerException e) {
+                                //this is a shitty fix for when Player = null
+                                // FIXME: 3/21/2016 figure out a better way
+                            }
                             displayBoard();
                             return;
                         }
