@@ -75,7 +75,7 @@ public class ChessModel implements IChessModel {
             JOptionPane.showMessageDialog(null, "Red Goes First");
             validMove = false; //not necessary
             firstMove = false;
-        } else if (board[move.fromRow][move.fromColumn].isValidMove(move, board)) { //i have no idea what this is doing or if it works
+        } else if (board[move.fromRow][move.fromColumn].isValidMove(move, board)) {
             validMove = true;
             firstMove = false;
         }

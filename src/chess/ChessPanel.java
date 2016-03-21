@@ -13,6 +13,8 @@ public class ChessPanel extends JPanel {
     private JButton[][] board;
     private ChessModel model;
     private JPanel center = new JPanel();
+
+    private JButton pieceLocation;
     //  private Move move = new Move();
 
     // declare other instance variables as needed
@@ -48,6 +50,14 @@ public class ChessPanel extends JPanel {
         add(new JLabel("Chess Game"), BorderLayout.NORTH);
         add(center, BorderLayout.CENTER);
         displayBoard();
+
+        // testing button and panel, remove from final
+        pieceLocation = new JButton("pieceLocation");
+        pieceLocation.addActionListener(buttonListener);
+        JPanel PLPanel = new JPanel();
+        PLPanel.add(pieceLocation);
+        this.add(PLPanel, BorderLayout.EAST);
+        // testing button and panel, remove from final
 
     }
 
@@ -139,6 +149,14 @@ public class ChessPanel extends JPanel {
     Move mover = new Move();
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
+
+            // testing button
+            JComponent buttonPressed = (JComponent) event.getSource();
+            if (buttonPressed == pieceLocation) {
+                JOptionPane.showMessageDialog(null, "" + model.pieceAt(3, 3));
+            }
+            // testing button
+
             if (firstClick == true) {
                 for (int row = 0; row < model.getNumRows(); row++) {
                     for (int col = 0; col < model.getNumCol(); col++) {      //Need to figure out how to get move to work.
