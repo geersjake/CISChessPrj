@@ -13,6 +13,8 @@ public class ChessPanel extends JPanel {
     private JButton[][] board;
     private ChessModel model;
     private JPanel center = new JPanel();
+
+    //private JButton pieceLocation;
     //  private Move move = new Move();
 
     // declare other instance variables as needed
@@ -48,6 +50,14 @@ public class ChessPanel extends JPanel {
         add(new JLabel("Chess Game"), BorderLayout.NORTH);
         add(center, BorderLayout.CENTER);
         displayBoard();
+
+        // testing button and panel, remove from final
+        //pieceLocation = new JButton("pieceLocation");
+        //pieceLocation.addActionListener(buttonListener);
+        //JPanel PLPanel = new JPanel();
+        //PLPanel.add(pieceLocation);
+        //this.add(PLPanel, BorderLayout.EAST);
+        // testing button and panel, remove from final
 
     }
 
@@ -117,16 +127,11 @@ public class ChessPanel extends JPanel {
                             board[row][col].setIcon(new ImageIcon("B Pawn.png"));
                         }
                     }
-
                 }
                 else {
                     board[row][col].setIcon(null);
                 }
-
-
             }
-
-
         }
     }
 
@@ -139,11 +144,20 @@ public class ChessPanel extends JPanel {
     Move mover = new Move();
     private class ButtonListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
+
+            // testing button
+            //JComponent buttonPressed = (JComponent) event.getSource();
+            //if (buttonPressed == pieceLocation) {
+            //    JOptionPane.showMessageDialog(null, "" + model.pieceAt(2, 3).player());
+            //}
+            // testing button
+
             if (firstClick == true) {
                 for (int row = 0; row < model.getNumRows(); row++) {
                     for (int col = 0; col < model.getNumCol(); col++) {      //Need to figure out how to get move to work.
+
                         if (board[row][col] == event.getSource()) {
-                            JOptionPane.showMessageDialog(null, "first click");
+                            //JOptionPane.showMessageDialog(null, "first click");
                             firstClick = false;
                             mover.fromRow = row;
                             mover.fromColumn = col;
@@ -157,7 +171,7 @@ public class ChessPanel extends JPanel {
                 for (int row = 0; row < model.getNumRows(); row++) {
                     for (int col = 0; col < model.getNumCol(); col++) {
                         if (board[row][col] == event.getSource()) {
-                            JOptionPane.showMessageDialog(null, "second click");
+                            //JOptionPane.showMessageDialog(null, "second click");
                             firstClick = true;
                             mover.toRow = row;
                             mover.toColumn = col;
