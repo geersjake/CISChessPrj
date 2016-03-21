@@ -19,13 +19,15 @@ public class ChessModel implements IChessModel {
     private Player player;
     private int numRows; //height of board
     private int numCol; // width of board
+    private boolean firstMove = true; //used to let white go first
+
 
 
 
     public ChessModel() {
         numRows = 8;
         numCol = 8;
-        player = Player.BLACK;
+        player = Player.WHITE; //changed to white
         //Instantiate player
         board = new IChessPiece[8][8];
 
@@ -68,22 +70,36 @@ public class ChessModel implements IChessModel {
 
     public boolean isValidMove(Move move) {
         boolean validMove = false;
-        if(board[move.fromRow][move.fromColumn].isValidMove(move, board)){ //i have no idea what this is doing or if it works
-            validMove = true;
+
+        if ((firstMove == true) && (this.pieceAt(move.fromRow, move.fromColumn).player() == Player.BLACK)) {
+            JOptionPane.showMessageDialog(null, "Red Goes First");
+            validMove = false; //not necessary
+            firstMove = false;
+        } else {
+            if (board[move.fromRow][move.fromColumn].isValidMove(move, board)) { //i have no idea what this is doing or if it works
+                validMove = true;
+                firstMove = false;
+            }
+
         }
+
         return validMove;
     }
 
     public void move(Move move) {
-        if(isValidMove(move)){ //not sure if condition is necessary
+
+        if (isValidMove(move)) {
             board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
             board[move.fromRow][move.fromColumn] = null;
-            JOptionPane.showMessageDialog(null, "Valid Move");
+
+
+            //JOptionPane.showMessageDialog(null, "Valid Move");
         }
         else{
             JOptionPane.showMessageDialog(null, "This is not a valid move");
        }
     }
+
 
     public boolean inCheck(Player p) {
         return false;

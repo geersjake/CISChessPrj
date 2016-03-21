@@ -142,8 +142,9 @@ public class ChessPanel extends JPanel {
             if (firstClick == true) {
                 for (int row = 0; row < model.getNumRows(); row++) {
                     for (int col = 0; col < model.getNumCol(); col++) {      //Need to figure out how to get move to work.
+
                         if (board[row][col] == event.getSource()) {
-                            JOptionPane.showMessageDialog(null, "first click");
+                            //JOptionPane.showMessageDialog(null, "first click");
                             firstClick = false;
                             mover.fromRow = row;
                             mover.fromColumn = col;
@@ -157,7 +158,7 @@ public class ChessPanel extends JPanel {
                 for (int row = 0; row < model.getNumRows(); row++) {
                     for (int col = 0; col < model.getNumCol(); col++) {
                         if (board[row][col] == event.getSource()) {
-                            JOptionPane.showMessageDialog(null, "second click");
+                            //JOptionPane.showMessageDialog(null, "second click");
                             firstClick = true;
                             mover.toRow = row;
                             mover.toColumn = col;
