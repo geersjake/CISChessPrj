@@ -23,7 +23,7 @@ public class Pawn extends ChessPiece {
     public String type() {
         return "Pawn";
     }
-    
+
 
     @Override
     public boolean isValidMove(Move move, IChessPiece[][] board) {

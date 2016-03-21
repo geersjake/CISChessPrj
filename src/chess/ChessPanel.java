@@ -14,7 +14,7 @@ public class ChessPanel extends JPanel {
     private ChessModel model;
     private JPanel center = new JPanel();
 
-    private JButton pieceLocation;
+    //private JButton pieceLocation;
     //  private Move move = new Move();
 
     // declare other instance variables as needed
@@ -52,11 +52,11 @@ public class ChessPanel extends JPanel {
         displayBoard();
 
         // testing button and panel, remove from final
-        pieceLocation = new JButton("pieceLocation");
-        pieceLocation.addActionListener(buttonListener);
-        JPanel PLPanel = new JPanel();
-        PLPanel.add(pieceLocation);
-        this.add(PLPanel, BorderLayout.EAST);
+        //pieceLocation = new JButton("pieceLocation");
+        //pieceLocation.addActionListener(buttonListener);
+        //JPanel PLPanel = new JPanel();
+        //PLPanel.add(pieceLocation);
+        //this.add(PLPanel, BorderLayout.EAST);
         // testing button and panel, remove from final
 
     }
@@ -127,16 +127,11 @@ public class ChessPanel extends JPanel {
                             board[row][col].setIcon(new ImageIcon("B Pawn.png"));
                         }
                     }
-
                 }
                 else {
                     board[row][col].setIcon(null);
                 }
-
-
             }
-
-
         }
     }
 
@@ -151,10 +146,10 @@ public class ChessPanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
 
             // testing button
-            JComponent buttonPressed = (JComponent) event.getSource();
-            if (buttonPressed == pieceLocation) {
-                JOptionPane.showMessageDialog(null, "" + model.pieceAt(3, 3));
-            }
+            //JComponent buttonPressed = (JComponent) event.getSource();
+            //if (buttonPressed == pieceLocation) {
+            //    JOptionPane.showMessageDialog(null, "" + model.pieceAt(2, 3).player());
+            //}
             // testing button
 
             if (firstClick == true) {

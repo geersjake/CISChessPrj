@@ -1,12 +1,10 @@
 package chess;
 
 /***********************************************************************
- *
  * Plays Chess
  *
  * @author Jake, Tyler, Jonathan
  * @version 1.0
- *
  **********************************************************************/
 
 import javax.swing.*;
@@ -20,8 +18,6 @@ public class ChessModel implements IChessModel {
     private int numRows; //height of board
     private int numCol; // width of board
     private boolean firstMove = true; //used to let white go first
-
-
 
 
     public ChessModel() {
@@ -55,12 +51,6 @@ public class ChessModel implements IChessModel {
         }
 
 
-
-
-
-
-
-
     }
 
     public boolean isComplete() {
@@ -79,7 +69,6 @@ public class ChessModel implements IChessModel {
             validMove = true;
             firstMove = false;
         }
-
         return validMove;
     }
 
@@ -88,13 +77,10 @@ public class ChessModel implements IChessModel {
         if (isValidMove(move)) {
             board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
             board[move.fromRow][move.fromColumn] = null;
-
-
             //JOptionPane.showMessageDialog(null, "Valid Move");
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "This is not a valid move");
-       }
+        }
     }
 
 
@@ -151,6 +137,5 @@ public class ChessModel implements IChessModel {
     public void setBoard(IChessPiece[][] board) {
         this.board = board;
     }
-
 
 }
