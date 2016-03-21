@@ -13,7 +13,7 @@ public class ChessPanel extends JPanel {
     private JButton[][] board;
     private ChessModel model;
     private JPanel center = new JPanel();
-    private Move move = new Move();
+    //  private Move move = new Move();
 
     // declare other instance variables as needed
 
@@ -25,18 +25,20 @@ public class ChessPanel extends JPanel {
         board = new JButton[8][8];
 
 
-        center.setLayout(new GridLayout(model.getNumRows(),model.getNumCol()));
+        center.setLayout(new GridLayout(model.getNumRows(), model.getNumCol()));
         int count = 1;
-        for (int row = 0; row < model.getNumRows(); row++){
-            for (int col = 0; col < model.getNumCol(); col++){
+        for (int row = 0; row < model.getNumRows(); row++) {
+            for (int col = 0; col < model.getNumCol(); col++) {
                 board[row][col] = new JButton("");
                 board[row][col].addActionListener(buttonListener);
-                board[row][col].setPreferredSize(new Dimension(50,50));
+                board[row][col].setPreferredSize(new Dimension(75, 75));
                 center.add(board[row][col]);
 
                 if (count % 2 == 0)
-                    board[row][col].setBackground(Color.blue);
-                if(!(col == 7))
+                    board[row][col].setBackground(Color.gray);
+                board[row][col].setOpaque(true);
+                board[row][col].setBorderPainted(false);
+                if (!(col == 7))
                     count++;
             }
         }
@@ -52,69 +54,73 @@ public class ChessPanel extends JPanel {
     private void displayBoard() {
         for (int row = 0; row < model.getNumRows(); row++) {
             for (int col = 0; col < model.getNumCol(); col++) {
-                if (model.pieceAt(row, col) != null){
-                    if (model.pieceAt(row, col).type().equals("Rook")){
+                if (model.pieceAt(row, col) != null) {
+                    if (model.pieceAt(row, col).type().equals("Rook")) {
 
-                        if (model.pieceAt(row, col).player() == Player.WHITE){    // need to add icons still
-                            board[row][col].setText("Rw");
+                        if (model.pieceAt(row, col).player() == Player.WHITE) {    // need to add icons still
+                            //  board[row][col].setText("Rw");
                             board[row][col].setIcon(new ImageIcon("R Rook.png"));
                         }
-                        if (model.pieceAt(row, col).player() == Player.BLACK){
-                            board[row][col].setText("Rb");
+                        if (model.pieceAt(row, col).player() == Player.BLACK) {
+                            //board[row][col].setText("Rb");
                             board[row][col].setIcon(new ImageIcon("B Rook.png"));
                         }
                     }
-                    if (model.pieceAt(row, col).type().equals("Knight")){
-                        if (model.pieceAt(row, col).player() == Player.WHITE){
-                            board[row][col].setText("Kw");
+                    if (model.pieceAt(row, col).type().equals("Knight")) {
+                        if (model.pieceAt(row, col).player() == Player.WHITE) {
+                            //board[row][col].setText("Kw");
                             board[row][col].setIcon(new ImageIcon("R Knight.png"));
                         }
-                        if (model.pieceAt(row, col).player() == Player.BLACK){
-                            board[row][col].setText("Kb");
+                        if (model.pieceAt(row, col).player() == Player.BLACK) {
+                            //board[row][col].setText("Kb");
                             board[row][col].setIcon(new ImageIcon("B Knight.png"));
                         }
                     }
-                    if (model.pieceAt(row, col).type().equals("Bishop")){
-                        if (model.pieceAt(row, col).player() == Player.WHITE){
-                            board[row][col].setText("Bw");
+                    if (model.pieceAt(row, col).type().equals("Bishop")) {
+                        if (model.pieceAt(row, col).player() == Player.WHITE) {
+                            //board[row][col].setText("Bw");
                             board[row][col].setIcon(new ImageIcon("R Bishop.png"));
 
                         }
-                        if (model.pieceAt(row, col).player() == Player.BLACK){
-                            board[row][col].setText("Bb");
+                        if (model.pieceAt(row, col).player() == Player.BLACK) {
+                            //board[row][col].setText("Bb");
                             board[row][col].setIcon(new ImageIcon("B Bishop.png"));
                         }
                     }
-                    if (model.pieceAt(row, col).type().equals("King")){
-                        if (model.pieceAt(row, col).player() == Player.WHITE){
-                            board[row][col].setText("Kw");
+                    if (model.pieceAt(row, col).type().equals("King")) {
+                        if (model.pieceAt(row, col).player() == Player.WHITE) {
+                            //board[row][col].setText("Kw");
                             board[row][col].setIcon(new ImageIcon("R King.png"));
                         }
-                        if (model.pieceAt(row, col).player() == Player.BLACK){
-                            board[row][col].setText("Kb");
+                        if (model.pieceAt(row, col).player() == Player.BLACK) {
+                            //board[row][col].setText("Kb");
                             board[row][col].setIcon(new ImageIcon("B King.png"));
                         }
                     }
-                    if (model.pieceAt(row, col).type().equals("Queen")){
-                        if (model.pieceAt(row, col).player() == Player.WHITE){
-                            board[row][col].setText("Qw");
+                    if (model.pieceAt(row, col).type().equals("Queen")) {
+                        if (model.pieceAt(row, col).player() == Player.WHITE) {
+                            //board[row][col].setText("Qw");
                             board[row][col].setIcon(new ImageIcon("R Queen.png"));
                         }
-                        if (model.pieceAt(row, col).player() == Player.BLACK){
-                            board[row][col].setText("Qb");
+                        if (model.pieceAt(row, col).player() == Player.BLACK) {
+                            //board[row][col].setText("Qb");
                             board[row][col].setIcon(new ImageIcon("B Queen.png"));
                         }
                     }
-                    if (model.pieceAt(row, col).type().equals("Pawn")){
-                        if (model.pieceAt(row, col).player() == Player.WHITE){
-                            board[row][col].setText("Pw");
+                    if (model.pieceAt(row, col).type().equals("Pawn")) {
+                        if (model.pieceAt(row, col).player() == Player.WHITE) {
+                            //board[row][col].setText("Pw");
                             board[row][col].setIcon(new ImageIcon("R Pawn.png"));
                         }
-                        if (model.pieceAt(row, col).player() == Player.BLACK){
-                            board[row][col].setText("Pb");
+                        if (model.pieceAt(row, col).player() == Player.BLACK) {
+                            //board[row][col].setText("Pb");
                             board[row][col].setIcon(new ImageIcon("B Pawn.png"));
                         }
                     }
+
+                }
+                else {
+                    board[row][col].setIcon(null);
                 }
 
 
@@ -125,21 +131,43 @@ public class ChessPanel extends JPanel {
     }
 
 
-
-
     // add other helper methods as needed
 
     // inner class that represents action listener for buttons
-    private class ButtonListener implements ActionListener {
-        JButton pieceToMoveButton = null;
-        public void actionPerformed(ActionEvent event) {
-            for (int row = 0; row < model.getNumRows(); row++) {
-                for (int col = 0; col < model.getNumCol(); col++) {      //Need to figure out how to get move to work.
-                    if (board[row][col] == event.getSource()){
 
+    Boolean firstClick = true;
+    Move mover = new Move();
+    private class ButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if (firstClick == true) {
+                for (int row = 0; row < model.getNumRows(); row++) {
+                    for (int col = 0; col < model.getNumCol(); col++) {      //Need to figure out how to get move to work.
+                        if (board[row][col] == event.getSource()) {
+                            JOptionPane.showMessageDialog(null, "first click");
+                            firstClick = false;
+                            mover.fromRow = row;
+                            mover.fromColumn = col;
+                            displayBoard();
+                            return;
+                        }
+                    }
+
+                }
+            }
+            if (firstClick == false) {
+                for (int row = 0; row < model.getNumRows(); row++) {
+                    for (int col = 0; col < model.getNumCol(); col++) {
+                        if (board[row][col] == event.getSource()) {
+                            JOptionPane.showMessageDialog(null, "second click");
+                            firstClick = true;
+                            mover.toRow = row;
+                            mover.toColumn = col;
+                            model.move(mover);
+                            displayBoard();
+                            return;
+                        }
                     }
                 }
-
             }
         }
     }
