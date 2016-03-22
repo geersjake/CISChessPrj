@@ -29,44 +29,26 @@ public class Pawn extends ChessPiece {
     public boolean isValidMove(Move move, IChessPiece[][] board) {
         boolean validMove = false;
         if (super.isValidMove(move, board)) {
-            if (move.toColumn == move.fromColumn) { //might have to change to accomidate attack
-                if (board[move.toRow][move.toColumn] == null) {
-                    if (this.player() == Player.WHITE) {
-                        if (this.isFirstMove()) {
-                            if (move.toRow == move.fromRow + 1 || move.toRow == move.fromRow + 2) {
-                                validMove = true;
-                                this.setFirstMove(false);
-                            }
-                        } else if (move.toRow == move.fromRow + 1) {
-                            validMove = true;
-                            this.setFirstMove(false);
-                        }
-                    } else if (this.player() == Player.BLACK) {
-                        if (this.isFirstMove()) {
-                            if (move.toRow == move.fromRow - 1 || move.toRow == move.fromRow - 2) {
-                                validMove = true;
-                                this.setFirstMove(false);
-                            }
-                        } else if (move.toRow == move.fromRow - 1) {
-                            validMove = true;
-                            this.setFirstMove(false);
-                        }
+            if (board[move.fromRow][move.fromColumn].player() == Player.BLACK){
+                if ((move.fromRow - move.toRow == 1) && move.fromColumn==move.toColumn && (board[move.toRow][move.toColumn] == null)) {
+                    validMove = true;
+                }
+                if (move.fromRow - move.toRow == 1 && board[move.toRow][move.toColumn] != null) {
+                    if (Math.abs(move.fromColumn - move.toColumn) == 1 && board[move.toRow][move.toColumn].player()
+                            != board[move.fromRow][move.fromColumn].player()) {
+                        validMove = true;
                     }
                 }
-            } else if (move.toColumn != move.fromColumn) {
-
-                if (board[move.fromRow][move.fromColumn].player() == Player.BLACK) {
-                    if (board[move.fromRow - 1][move.fromColumn - 1] == board[move.toRow][move.toColumn]) {
-                        validMove = true;
-                    } else if (board[move.fromRow - 1][move.fromColumn + 1] == board[move.toRow][move.toColumn]) {
-                        validMove = true;
-                    }
-                } else if (board[move.fromRow][move.fromColumn].player() == Player.WHITE) {
-                    if (board[move.fromRow + 1][move.fromColumn - 1] == board[move.toRow][move.toColumn]) {
-                        validMove = true;
-                    } else if (board[move.fromRow + 1][move.fromColumn + 1] == board[move.toRow][move.toColumn]) {
-                        validMove = true;
-                    }
+            }
+            if (board[move.fromRow][move.fromColumn].player() == Player.WHITE){
+                if ((move.fromRow - move.toRow == -1) && move.fromColumn==move.toColumn && (board[move.toRow][move.toColumn] == null)) {
+                    validMove = true;
+                }
+                if (move.fromRow - move.toRow == -1 && board[move.toRow][move.toColumn] != null) {
+                   if (Math.abs(move.fromColumn - move.toColumn) == 1 && board[move.toRow][move.toColumn].player()
+                           != board[move.fromRow][move.fromColumn].player()) {
+                       validMove = true;
+                   }
                 }
             }
         }
