@@ -29,6 +29,7 @@ public class Bishop extends ChessPiece {
             if (Math.abs(move.fromRow - move.toRow) == Math.abs(move.fromColumn - move.toColumn)) {
                 validMove = true;
             }
+            //if ()
         }
         //fix in step 8
         return validMove;
