@@ -9,9 +9,6 @@ package chess;
 
 import javax.swing.*;
 
-/**
- * Created by tylerfaulk on 2/29/16.
- */
 public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
     private Player player;
@@ -54,6 +51,8 @@ public class ChessModel implements IChessModel {
     }
 
     public boolean isComplete() {
+
+
         return false;
         // FIXME: 3/17/2016 step 10
     }
@@ -85,8 +84,13 @@ public class ChessModel implements IChessModel {
 
 
     public boolean inCheck(Player p) {
-        return false;
-        // FIXME: 3/17/2016 step 9
+        this.isComplete();
+        //for()
+            //for()
+                //if()
+                    return true;
+
+        //return false;
     }
 
     public Player currentPlayer() {
