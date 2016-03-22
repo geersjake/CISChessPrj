@@ -31,24 +31,26 @@ public class Pawn extends ChessPiece {
         boolean validMove = false;
         if (super.isValidMove(move, board)) {
 
-            //if(model.pieceAt(move.fromRow, move.fromColumn).player() == Player.WHITE)
+            if((board[move.fromRow][move.fromColumn].player() == Player.WHITE)) {
                 if (move.fromRow == 1) {
                     if (move.toRow == move.fromRow + 2 || move.toRow == move.fromRow + 1)
                         validMove = true;
-                }
-                else {
+                } else {
                     if (move.toRow == move.fromRow + 1)
                         validMove = true;
                 }
-            //else
+            }
+            else {
                 if (move.fromRow == 6) {
                     if (move.toRow == move.fromRow - 2 || move.toRow == move.fromRow - 1)
                         validMove = true;
-                }
-                else {
+                } else {
                     if (move.toRow == move.fromRow - 1)
                         validMove = true;
                 }
+            }
+
+            //if() Taking stuff
 
         }
         return validMove;

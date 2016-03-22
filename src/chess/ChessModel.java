@@ -8,6 +8,7 @@ package chess;
  **********************************************************************/
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
@@ -15,6 +16,8 @@ public class ChessModel implements IChessModel {
     private int numRows; //height of board
     private int numCol; // width of board
     private boolean firstMove = true; //used to let white go first
+    private ArrayList theDead;
+
 
 
     public ChessModel() {
@@ -47,6 +50,7 @@ public class ChessModel implements IChessModel {
             board[1][col] = new Pawn(player.WHITE);
         }
 
+        ArrayList<IChessPiece> dead = new ArrayList<>();
 
     }
 
@@ -63,22 +67,36 @@ public class ChessModel implements IChessModel {
         if ((firstMove == true) && (board[move.fromRow][move.fromColumn].player() == Player.BLACK)) {
             JOptionPane.showMessageDialog(null, "Red Goes First");
             validMove = false; //not necessary
-            firstMove = false;
-        } else if (board[move.fromRow][move.fromColumn].isValidMove(move, board)) {
+            firstMove = true;
+        }else if ((board[move.fromRow][move.fromColumn].isValidMove(move, board))
+                && (board[move.fromRow][move.fromColumn].player() == getPlayer())) {
             validMove = true;
             firstMove = false;
         }
+
         return validMove;
     }
 
     public void move(Move move) {
 
         if (isValidMove(move)) {
+
+            if((Player.BLACK == getPlayer()) )
+                setPlayer(Player.WHITE);
+            else
+                setPlayer(Player.BLACK);
+
             board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
             board[move.fromRow][move.fromColumn] = null;
-            //JOptionPane.showMessageDialog(null, "Valid Move");
+
+            if(pieceAt(move.toRow, move.toColumn) != null)
+                theDead.add(pieceAt(move.toRow, move.toColumn));
+
         } else {
-            JOptionPane.showMessageDialog(null, "This is not a valid move");
+            if(board[move.fromRow][move.fromColumn].player() != getPlayer())
+                JOptionPane.showMessageDialog(null, "It is " + getPlayer() + " turn.");
+            else
+                JOptionPane.showMessageDialog(null, "This is not a valid move");
         }
     }
 
