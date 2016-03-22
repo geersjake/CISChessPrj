@@ -79,18 +79,29 @@ public class ChessModel implements IChessModel {
 
     public void move(Move move) {
 
+        if(inCheck(currentPlayer()))
+            JOptionPane.showMessageDialog(null, "In Check");
+
         if (isValidMove(move)) {
 
-            if((Player.BLACK == getPlayer()) )
+            if((Player.BLACK == getPlayer()) ) {
                 setPlayer(Player.WHITE);
-            else
+            }
+            else {
                 setPlayer(Player.BLACK);
+            }
+
 
             board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
             board[move.fromRow][move.fromColumn] = null;
 
-            if(pieceAt(move.toRow, move.toColumn) != null)
-                theDead.add(pieceAt(move.toRow, move.toColumn));
+            //if(pieceAt(move.toRow, move.toColumn) != null)
+                //theDead.add(pieceAt(move.toRow, move.toColumn));
+
+            if(board[move.fromRow][move.fromColumn].type().equals("Pawn")) {
+                if (move.fromRow == 0 || move.fromRow == 7)
+                    this.promotion(move);
+            }
 
         } else {
             if(board[move.fromRow][move.fromColumn].player() != getPlayer())
@@ -102,14 +113,58 @@ public class ChessModel implements IChessModel {
 
 
     public boolean inCheck(Player p) {
-        this.isComplete();
-        //for()
-            //for()
-                //if()
-                    return true;
+        int[][] possibleMoves = new int[8][8]; // Array of Integers representing board and available moves
+        // to help determine check. "0" will represent no possible moves
+        Move checkMove = new Move();                                   // and "1" will represent possible move. Just Theorizing right now...
 
-        //return false;
+        if (firstMove)
+            return false;
+
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                // if (board[row][col])
+
+                if (board[row][col] != null && board[row][col].player() != currentPlayer()) {  //find rook possible moves
+                    checkMove.fromRow = row;
+                    checkMove.fromColumn = col;
+
+                    for (int row1 = 0; row1 < 8; row1++) {
+                        for (int col1 = 0; col1 < 8; col1++) {
+                            checkMove.toRow = row1;
+                            checkMove.toColumn = col1;
+                            if (isValidMove(checkMove) == true) {
+
+                                possibleMoves[row1][col1] = 1;
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (int row2 = 0; row2 < 8; row2++) {
+            for (int col2 = 0; col2 < 8; col2++) {
+                if (board[row2][col2].type().equals("King") && board[row2][col2].player() == currentPlayer()) {
+                    if (possibleMoves[row2][col2] == 1)
+                        return true;
+                    else
+                        return false;
+                }
+            }
+        }
+        return false;
     }
+
+    public void promotion (Move move){
+
+        //if(theDead == null)
+            if(getPlayer() == Player.WHITE)
+                board[move.toRow][move.toColumn] = new Queen(player.WHITE);
+            else
+                board[move.toRow][move.toColumn] = new Queen(player.BLACK);
+
+    }
+
 
     public Player currentPlayer() {
         return player;

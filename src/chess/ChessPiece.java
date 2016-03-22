@@ -9,6 +9,8 @@ package chess;
  *
  **********************************************************************/
 
+import javax.swing.*;
+
 /**
  * Created by tylerfaulk on 2/29/16.
  */
@@ -47,7 +49,6 @@ public abstract class ChessPiece implements IChessPiece {
         return validMove;
 
     }
-
 
 }
 
