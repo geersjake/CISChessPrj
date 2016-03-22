@@ -79,24 +79,23 @@ public class ChessModel implements IChessModel {
 
     public void move(Move move) {
 
-        //if(inCheck(currentPlayer()))
-            //JOptionPane.showMessageDialog(null, "In Check");
-
         if(board[move.fromRow][move.fromColumn].player() == currentPlayer()) {
             if (isValidMove(move)) {
 
                 board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
                 board[move.fromRow][move.fromColumn] = null;
                 setPlayer(currentPlayer().next());
-
-
+                if(inCheck(player.WHITE))
+                    JOptionPane.showMessageDialog(null, "White is in Check");
+                if(inCheck(player.BLACK))
+                    JOptionPane.showMessageDialog(null, "Black is in Check");
                 //if(pieceAt(move.toRow, move.toColumn) != null)
                 //theDead.add(pieceAt(move.toRow, move.toColumn));
 
-                if (board[move.fromRow][move.fromColumn].type().equals("Pawn")) {
-                    if (move.fromRow == 0 || move.fromRow == 7)
-                        this.promotion(move);
-                }
+                //if (board[move.fromRow][move.fromColumn].type().equals("Pawn")) {
+                  //  if (move.fromRow == 0 || move.fromRow == 7)
+                    //    this.promotion(move);
+               // }
 
             } else {
                 JOptionPane.showMessageDialog(null, "This is not a valid move");
@@ -119,7 +118,7 @@ public class ChessModel implements IChessModel {
             for (int col = 0; col < 8; col++) {
                 // if (board[row][col])
 
-                if (board[row][col] != null && board[row][col].player() != currentPlayer()) {  //find rook possible moves
+                if (board[row][col] != null && board[row][col].player() != p) {  //find rook possible moves
                     checkMove.fromRow = row;
                     checkMove.fromColumn = col;
 
@@ -139,7 +138,7 @@ public class ChessModel implements IChessModel {
         }
         for (int row2 = 0; row2 < 8; row2++) {
             for (int col2 = 0; col2 < 8; col2++) {
-                if (board[row2][col2].type().equals("King") && board[row2][col2].player() == currentPlayer()) {
+                if (board[row2][col2].type().equals("King") && board[row2][col2].player() == p ) {
                     if (possibleMoves[row2][col2] == 1)
                         return true;
                     else
