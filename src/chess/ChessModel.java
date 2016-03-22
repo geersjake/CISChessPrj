@@ -79,36 +79,31 @@ public class ChessModel implements IChessModel {
 
     public void move(Move move) {
 
-        if(inCheck(currentPlayer()))
-            JOptionPane.showMessageDialog(null, "In Check");
+        //if(inCheck(currentPlayer()))
+            //JOptionPane.showMessageDialog(null, "In Check");
 
-        if (isValidMove(move)) {
+        if(board[move.fromRow][move.fromColumn].player() == currentPlayer()) {
+            if (isValidMove(move)) {
 
-            if((Player.BLACK == getPlayer()) ) {
-                setPlayer(Player.WHITE);
-            }
-            else {
-                setPlayer(Player.BLACK);
-            }
+                board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
+                board[move.fromRow][move.fromColumn] = null;
+                setPlayer(currentPlayer().next());
 
 
-            board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
-            board[move.fromRow][move.fromColumn] = null;
-
-            //if(pieceAt(move.toRow, move.toColumn) != null)
+                //if(pieceAt(move.toRow, move.toColumn) != null)
                 //theDead.add(pieceAt(move.toRow, move.toColumn));
 
-            if(board[move.fromRow][move.fromColumn].type().equals("Pawn")) {
-                if (move.fromRow == 0 || move.fromRow == 7)
-                    this.promotion(move);
-            }
+                if (board[move.fromRow][move.fromColumn].type().equals("Pawn")) {
+                    if (move.fromRow == 0 || move.fromRow == 7)
+                        this.promotion(move);
+                }
 
-        } else {
-            if(board[move.fromRow][move.fromColumn].player() != getPlayer())
-                JOptionPane.showMessageDialog(null, "It is " + getPlayer() + " turn.");
-            else
+            } else {
                 JOptionPane.showMessageDialog(null, "This is not a valid move");
+            }
         }
+        else
+            JOptionPane.showMessageDialog(null, "It is " + getPlayer() + " turn.");
     }
 
 
