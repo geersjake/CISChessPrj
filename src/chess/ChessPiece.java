@@ -43,6 +43,7 @@ public abstract class ChessPiece implements IChessPiece {
 
                 } catch (NullPointerException e) {
                     validMove = true;
+
                 }
             }
         }

@@ -107,46 +107,46 @@ public class ChessModel implements IChessModel {
 
 
     public boolean inCheck(Player p) {
-        int[][] possibleMoves = new int[8][8]; // Array of Integers representing board and available moves
-        // to help determine check. "0" will represent no possible moves
-        Move checkMove = new Move();                                   // and "1" will represent possible move. Just Theorizing right now...
-
-        if (firstMove)
-            return false;
-
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                // if (board[row][col])
-
-                if (board[row][col] != null && board[row][col].player() != p) {  //find rook possible moves
-                    checkMove.fromRow = row;
-                    checkMove.fromColumn = col;
-
-                    for (int row1 = 0; row1 < 8; row1++) {
-                        for (int col1 = 0; col1 < 8; col1++) {
-                            checkMove.toRow = row1;
-                            checkMove.toColumn = col1;
-                            if (isValidMove(checkMove) == true) {
-
-                                possibleMoves[row1][col1] = 1;
-
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        for (int row2 = 0; row2 < 8; row2++) {
-            for (int col2 = 0; col2 < 8; col2++) {
-                if (board[row2][col2].type().equals("King") && board[row2][col2].player() == p ) {
-                    if (possibleMoves[row2][col2] == 1)
-                        return true;
-                    else
-                        return false;
-                }
-            }
-        }
-        return false;
+//        int[][] possibleMoves = new int[8][8]; // Array of Integers representing board and available moves
+//        // to help determine check. "0" will represent no possible moves
+//        Move checkMove = new Move();                                   // and "1" will represent possible move. Just Theorizing right now...
+//
+//        if (firstMove)
+//            return false;
+//
+//        for (int row = 0; row < 8; row++) {
+//            for (int col = 0; col < 8; col++) {
+//                // if (board[row][col])
+//
+//                if (board[row][col] != null && board[row][col].player() != p) {  //find rook possible moves
+//                    checkMove.fromRow = row;
+//                    checkMove.fromColumn = col;
+//
+//                    for (int row1 = 0; row1 < 8; row1++) {
+//                        for (int col1 = 0; col1 < 8; col1++) {
+//                            checkMove.toRow = row1;
+//                            checkMove.toColumn = col1;
+//                            if (isValidMove(checkMove) == true) {
+//
+//                                possibleMoves[row1][col1] = 1;
+//
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        for (int row2 = 0; row2 < 8; row2++) {
+//            for (int col2 = 0; col2 < 8; col2++) {
+//                if (board[row2][col2].type().equals("King") && board[row2][col2].player() == p ) {
+//                    if (possibleMoves[row2][col2] == 1)
+//                        return true;
+//                    else
+//                        return false;
+//                }
+//            }
+//        }
+           return false;
     }
 
     public void promotion (Move move){
