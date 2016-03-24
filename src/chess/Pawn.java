@@ -39,6 +39,11 @@ public class Pawn extends ChessPiece {
                         validMove = true;
                     }
                 }
+                if ((move.fromRow - move.toRow == 2) && move.fromColumn==move.toColumn && (board[move.toRow][move.toColumn] == null)){
+                    if (move.fromRow == 6) {
+                        validMove = true;
+                    }
+                }
             }
             if (board[move.fromRow][move.fromColumn].player() == Player.WHITE){
                 if ((move.fromRow - move.toRow == -1) && move.fromColumn==move.toColumn && (board[move.toRow][move.toColumn] == null)) {
@@ -49,6 +54,11 @@ public class Pawn extends ChessPiece {
                            != board[move.fromRow][move.fromColumn].player()) {
                        validMove = true;
                    }
+                }
+                if ((move.fromRow - move.toRow == -2) && move.fromColumn==move.toColumn && (board[move.toRow][move.toColumn] == null)){
+                    if (move.fromRow == 1){
+                        validMove = true;
+                    }
                 }
             }
         }

@@ -44,7 +44,5 @@ public abstract class ChessPiece implements IChessPiece {
         return validMove;
 
     }
-
-
 }
 

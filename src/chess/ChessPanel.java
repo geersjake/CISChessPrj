@@ -33,7 +33,9 @@ public class ChessPanel extends JPanel {
         center.setLayout(new GridLayout(model.getNumRows(), model.getNumCol()));
         bottom.setLayout(new GridLayout(1, 2));
         butQuit = new JButton("Quit");
+        butQuit.addActionListener(buttonListener);
         butNewGame = new JButton("New Game");
+        butNewGame.addActionListener(buttonListener);
         bottom.add(butQuit);
         bottom.add(butNewGame);
 
@@ -144,6 +146,10 @@ public class ChessPanel extends JPanel {
             //    JOptionPane.showMessageDialog(null, "" + model.pieceAt(2, 3).player());
             //}
             // testing button
+            if (butNewGame == event.getSource()){
+                model.isComplete();
+            }
+
 
             if (firstClick == true) {
                 for (int row = 0; row < model.getNumRows(); row++) {
