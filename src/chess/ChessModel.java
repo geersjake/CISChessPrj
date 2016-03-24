@@ -51,9 +51,47 @@ public class ChessModel implements IChessModel {
         }
     }
 
-    public boolean isComplete() {
-        return false;
-        // FIXME: 3/17/2016 step 10
+    public boolean isComplete() {  //Need to make sure other pieces cant move through pieces before we're able to test if this works correctly
+        Move testMove = new Move();
+        boolean isCheckMate = true;
+        Player testPlayer;
+        if (inCheck(Player.WHITE)){
+            testPlayer = Player.WHITE;
+        }
+        else{
+            testPlayer = Player.BLACK;
+        }
+
+        for (int row = 0; row < 8; row++){
+            for (int col = 0; col < 8; col++){
+                if (board[row][col] != null && board[row][col].player() == testPlayer) {
+                    testMove.fromRow = row;
+                    testMove.fromColumn = col;
+                    for (int row1 = 0; row1 < 8; row1++){
+                        for (int col1 = 0; col1 < 8; col1++){
+                            testMove.toRow = row1;
+                            testMove.toColumn = col1;
+                            if (isValidMove(testMove)){
+                                board[testMove.toRow][testMove.toColumn] = board[testMove.fromRow][testMove.fromColumn];
+                                board[testMove.fromRow][testMove.fromColumn] = null;
+                                if (!inCheck(testPlayer)){
+                                    isCheckMate = false;
+                                }
+                                board[testMove.fromRow][testMove.fromColumn] = board[testMove.toRow][testMove.toColumn];
+                                board[testMove.toRow][testMove.toColumn] = null;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (isCheckMate == true){
+            JOptionPane.showMessageDialog(null, "CheckMate. Game is over");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Keep going");
+        }
+        return isCheckMate;
     }
 
     public boolean isValidMove(Move move) {
@@ -73,30 +111,43 @@ public class ChessModel implements IChessModel {
     public void move(Move move) {
         if (board[move.fromRow][move.fromColumn].player() == currentPlayer()) {
             if (isValidMove(move)) {
-                board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
-                board[move.fromRow][move.fromColumn] = null;
-                setPlayer(currentPlayer().next());
-              //  if(inCheck(currentPlayer())){
-               //     JOptionPane.showMessageDialog(null, currentPlayer() + " you are in check");
-               // }
-
-                //JOptionPane.showMessageDialog(null, "Valid Move");
+                if (!inCheck(currentPlayer())) {
+                    board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
+                    board[move.fromRow][move.fromColumn] = null;
+                    setPlayer(currentPlayer().next());
+                    if (inCheck(Player.BLACK) == true) {
+                        JOptionPane.showMessageDialog(null, " BLACK in check");
+                    }
+                    if (inCheck(Player.WHITE) == true) {
+                        JOptionPane.showMessageDialog(null, "WHITE in check");
+                    }
+                }
+                else {
+                    board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
+                    board[move.fromRow][move.fromColumn] = null;
+                    if(inCheck(currentPlayer())){
+                        board[move.fromRow][move.fromColumn] = board[move.toRow][move.toColumn];
+                        board[move.toRow][move.toColumn] = null;
+                        JOptionPane.showMessageDialog(null, "You must move out of check");
+                    }
+                    else{
+                        setPlayer(currentPlayer().next());
+                    }
+                }
             }
-            else{
+            else {
                 JOptionPane.showMessageDialog(null, "This is not a valid move");
             }
         }
         else{
             JOptionPane.showMessageDialog(null, "It is " + currentPlayer() + " turn" );
         }
-
     }
-
 
     public boolean inCheck(Player p) {
         int[][] possibleMoves = new int[8][8]; // Array of Integers representing board and inCheck spaces.
         Move checkMove = new Move();
-
+        boolean isKingInCheck = false;
         if(firstMove)
             return false;
 
@@ -122,19 +173,17 @@ public class ChessModel implements IChessModel {
 
         for (int row2 = 0; row2 < 8; row2++){
             for ( int col2 = 0; col2 < 8; col2++) {
-
-                if (board[row2][col2].type().equals("King") && board[row2][col2].player() == p){ //Find the King on the board.
-                    if (possibleMoves[row2][col2] == 1){
-                        return true;
-                    }
-                    else{
-                        return false;
+                if (board[row2][col2] != null){
+                    if (board[row2][col2].type().equals("King") && board[row2][col2].player() == p){ //Find the King on the board.
+                        if (possibleMoves[row2][col2] == 1){
+                            isKingInCheck = true;
+                        }
                     }
                 }
             }
         }
 
-        return false;
+        return isKingInCheck;
         // FIXME: 3/17/2016 step 9
     }
 
