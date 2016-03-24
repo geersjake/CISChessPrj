@@ -53,19 +53,57 @@ public class Pawn extends ChessPiece {
                         }
                     }
                 }
-            } else if (move.toColumn != move.fromColumn) {
+            }
+            else if (move.toColumn != move.fromColumn) {
+                if (move.fromColumn != 0 && move.fromColumn != 7){
 
-                if (board[move.fromRow][move.fromColumn].player() == Player.BLACK) {
-                    if (board[move.fromRow - 1][move.fromColumn - 1] == board[move.toRow][move.toColumn]) {
-                        validMove = true;
-                    } else if (board[move.fromRow - 1][move.fromColumn + 1] == board[move.toRow][move.toColumn]) {
-                        validMove = true;
+
+                    if (board[move.fromRow][move.fromColumn].player() == Player.BLACK) {
+                        if (board[move.fromRow - 1][move.fromColumn - 1] == board[move.toRow][move.toColumn] &&
+                                board[move.toRow][move.toColumn] != null) {
+                            validMove = true;
+                        } else if (board[move.fromRow - 1][move.fromColumn + 1] == board[move.toRow][move.toColumn] &&
+                                board[move.toRow][move.toColumn] != null) {
+                            validMove = true;
+                        }
+                    } else if (board[move.fromRow][move.fromColumn].player() == Player.WHITE) {
+                        if (board[move.fromRow + 1][move.fromColumn - 1] == board[move.toRow][move.toColumn] &&
+                                board[move.toRow][move.toColumn] != null) {
+                            validMove = true;
+                        } else if (board[move.fromRow + 1][move.fromColumn + 1] == board[move.toRow][move.toColumn] &&
+                                board[move.toRow][move.toColumn] != null) {
+                            validMove = true;
+
+
+                        }
                     }
-                } else if (board[move.fromRow][move.fromColumn].player() == Player.WHITE) {
-                    if (board[move.fromRow + 1][move.fromColumn - 1] == board[move.toRow][move.toColumn]) {
-                        validMove = true;
-                    } else if (board[move.fromRow + 1][move.fromColumn + 1] == board[move.toRow][move.toColumn]) {
-                        validMove = true;
+                }
+                if (move.fromColumn ==0) {
+                    if (board[move.fromRow][move.fromColumn].player() == Player.BLACK) {
+                        if (board[move.fromRow - 1][move.fromColumn + 1] == board[move.toRow][move.toColumn] &&
+                                board[move.toRow][move.toColumn] != null) {
+                            validMove = true;
+                        }
+                    }
+                    if (board[move.fromRow][move.fromColumn].player() == Player.WHITE) {
+                        if (board[move.fromRow + 1][move.fromColumn + 1] == board[move.toRow][move.toColumn] &&
+                                board[move.toRow][move.toColumn] != null) {
+                            validMove = true;
+                        }
+                    }
+                }
+                if (move.fromColumn ==7) {
+                    if (board[move.fromRow][move.fromColumn].player() == Player.BLACK) {
+                        if (board[move.fromRow - 1][move.fromColumn - 1] == board[move.toRow][move.toColumn] &&
+                                board[move.toRow][move.toColumn] != null) {
+                            validMove = true;
+                        }
+                    }
+                    if (board[move.fromRow][move.fromColumn].player() == Player.WHITE) {
+                        if (board[move.fromRow + 1][move.fromColumn - 1] == board[move.toRow][move.toColumn] &&
+                                board[move.toRow][move.toColumn] != null) {
+                            validMove = true;
+                        }
                     }
                 }
             }

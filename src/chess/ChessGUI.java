@@ -22,6 +22,7 @@ public class ChessGUI {
         ChessPanel panel = new ChessPanel();
         frame.getContentPane().add(panel);
 
+        frame.setResizable(false);//merge this
         frame.pack();
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);

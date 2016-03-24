@@ -13,6 +13,8 @@ public class ChessPanel extends JPanel {
     private JButton[][] board;
     private ChessModel model;
     private JPanel center = new JPanel();
+    private JPanel bottom = new JPanel();
+    private JButton quit, newGame;
 
     //private JButton pieceLocation;
     //  private Move move = new Move();
@@ -46,9 +48,12 @@ public class ChessPanel extends JPanel {
         }
 
         //adding to content pane
+        bottom.setLayout(new GridLayout(3, 2));
+
         setLayout(new BorderLayout());
         add(new JLabel("Chess Game"), BorderLayout.NORTH);
         add(center, BorderLayout.CENTER);
+
         displayBoard();
 
         // testing button and panel, remove from final
@@ -182,6 +187,7 @@ public class ChessPanel extends JPanel {
                                 // FIXME: 3/21/2016 figure out a better way
                             }
                             displayBoard();
+
                             return;
                         }
                     }

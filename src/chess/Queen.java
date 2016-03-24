@@ -33,7 +33,56 @@ public class Queen extends ChessPiece {
                     validMove = true;
                 }
 
-            //Needs proper row and col
+            int tempCol = move.fromColumn;
+            int tempRow = move.fromRow;
+            while((tempRow != move.toRow) || (tempCol != move.toColumn)){
+
+                if(tempCol > move.toColumn && tempRow == move.toRow
+                        && tempCol <= 7 && tempCol >= 0)
+                    tempCol --;
+
+                if(tempCol < move.toColumn && tempRow == move.toRow
+                        && tempCol <= 7 && tempCol >= 0)
+                    tempCol ++;
+
+                if(tempRow > move.toRow && tempCol == move.toColumn
+                        && tempRow <= 7 && tempRow >= 0)
+                    tempRow --;
+
+                if(tempRow < move.toRow && tempCol == move.toColumn
+                        && tempCol <= 7 && tempCol >= 0)
+                    tempRow ++;
+
+                if(tempRow > move.toRow && tempCol > move.toColumn
+                        && tempCol <= 7 && tempCol >= 0 && tempRow <= 7 && tempRow >= 0) {
+                    tempCol--;
+                    tempRow--;
+                }
+
+                if(tempRow < move.toRow && tempCol < move.toColumn
+                        && tempCol <= 7 && tempCol >= 0 && tempRow <= 7 && tempRow >= 0) {
+                    tempCol++;
+                    tempRow++;
+                }
+
+                if(tempRow > move.toRow && tempCol < move.toColumn
+                        && tempCol <= 7 && tempCol >= 0 && tempRow <= 7 && tempRow >= 0) {
+                    tempRow--;
+                    tempCol ++;
+                }
+
+                if(tempRow < move.toRow && tempCol > move.toColumn
+                        && tempCol <= 7 && tempCol >= 0 && tempRow <= 7 && tempRow >= 0) {
+                    tempRow++;
+                    tempCol--;
+                }
+
+                if(!(tempCol == move.toColumn && tempRow == move.toRow)) {
+                    if (board[tempRow][tempCol] != null)
+                        validMove = false;
+                }
+
+            }
         }
         return validMove;
     }
