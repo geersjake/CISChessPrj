@@ -31,8 +31,6 @@ public class ChessPanel extends JPanel {
     //The button listener to figure out what button
     // is pushed and what logic to call
     private ButtonListener buttonListener = new ButtonListener();
-    //Panel holding game information
-    private JPanel rPanel;
 
 /***********************************************************************
  *
@@ -45,7 +43,6 @@ public class ChessPanel extends JPanel {
 
         model = new ChessModel();
         board = new JButton[8][8];
-
 
         center.setLayout(new GridLayout(model.getNumRows(), model.getNumCol()));
         bottom.setLayout(new GridLayout(2, 2));
@@ -217,6 +214,8 @@ public class ChessPanel extends JPanel {
                             else {
                                 firstClick = false;
                                 board[mover.fromRow][mover.fromColumn].setBackground(Color.green);
+                                //highLight();
+                                // TODO: 3/25/2016  
                             }
 
                             displayBoard();
@@ -235,7 +234,8 @@ public class ChessPanel extends JPanel {
                             mover.toColumn = col;
                             model.move(mover);
 
-                            if((mover.fromColumn % 2 == 0 && mover.fromRow % 2 == 0)||(mover.fromColumn % 2 == 1 && mover.fromRow % 2 == 1))
+                            if((mover.fromColumn % 2 == 0 && mover.fromRow % 2 == 0)||
+                                    (mover.fromColumn % 2 == 1 && mover.fromRow % 2 == 1))
                                 board[mover.fromRow][mover.fromColumn].setBackground(Color.white);
                             else
                                 board[mover.fromRow][mover.fromColumn].setBackground(Color.gray);
@@ -269,10 +269,32 @@ public class ChessPanel extends JPanel {
                             displayBoard();
                             //model.isComplete();
                             return;
-                        
+
                         }
                     }
                 }
+            }
+        }
+    }
+
+    // TODO: 3/25/2016  
+    public void highLight() {
+
+        int[][] possibleMoves = new int[8][8]; // Array of Integers representing board and inCheck spaces.
+        Move checkMove = new Move();
+        for (int row = 0; row <= 7; row++) {       //searches for pieces on board
+            for (int col = 0; col <= 7; col++) {
+                checkMove.toColumn = col;
+                checkMove.toRow = row;
+                checkMove.fromColumn = mover.fromColumn;
+                checkMove.fromRow = mover.fromRow;
+
+                if (model.isValidMove(checkMove)) {
+                    board[row][col].setBackground(Color.blue);
+                    if(model.pieceAt(row, col) != null)
+                        board[row][col].setBackground(Color.pink);
+                }
+
             }
         }
     }

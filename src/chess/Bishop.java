@@ -97,7 +97,6 @@ public class Bishop extends ChessPiece {
                     if (board[tempRow][tempCol] != null)
                         validMove = false;
                 }
-
             }
         }
         return validMove;
