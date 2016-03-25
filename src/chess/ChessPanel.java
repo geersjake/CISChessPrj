@@ -150,6 +150,10 @@ public class ChessPanel extends JPanel {
                 model.isComplete();
             }
 
+            if (butQuit == event.getSource()) {
+                model.inCheck(Player.BLACK);
+            }
+
 
             if (firstClick == true) {
                 for (int row = 0; row < model.getNumRows(); row++) {
