@@ -20,14 +20,17 @@ public class Knight extends ChessPiece {
         boolean validMove = false;
         changeRow = Math.abs(move.fromRow - move.toRow);
         changeCol = Math.abs(move.fromColumn - move.toColumn);
-        if(super.isValidMove(move, board)){
-            if (changeRow == 1 || changeRow == 2) {
+        if (super.isValidMove(move, board)){
+            if (changeRow == 1 || changeRow == 2){
                 if (changeCol == 1 || changeCol == 2) {
-                    if (changeRow != changeCol)
+                    if (changeRow != changeCol){
                         validMove = true;
+                    }
                 }
+
             }
         }
+
         //fix in step 8
         return validMove;
     }

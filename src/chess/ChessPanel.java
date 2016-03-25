@@ -14,7 +14,8 @@ public class ChessPanel extends JPanel {
     private ChessModel model;
     private JPanel center = new JPanel();
     private JPanel bottom = new JPanel();
-    private JButton quit, newGame;
+    private JButton butQuit;
+    private JButton butNewGame;
 
     //private JButton pieceLocation;
     //  private Move move = new Move();
@@ -30,6 +31,14 @@ public class ChessPanel extends JPanel {
 
 
         center.setLayout(new GridLayout(model.getNumRows(), model.getNumCol()));
+        bottom.setLayout(new GridLayout(1, 2));
+        butQuit = new JButton("Quit");
+        butQuit.addActionListener(buttonListener);
+        butNewGame = new JButton("New Game");
+        butNewGame.addActionListener(buttonListener);
+        bottom.add(butQuit);
+        bottom.add(butNewGame);
+
         int count = 1;
         for (int row = 0; row < model.getNumRows(); row++) {
             for (int col = 0; col < model.getNumCol(); col++) {
@@ -48,12 +57,10 @@ public class ChessPanel extends JPanel {
         }
 
         //adding to content pane
-        bottom.setLayout(new GridLayout(3, 2));
-
         setLayout(new BorderLayout());
         add(new JLabel("Chess Game"), BorderLayout.NORTH);
         add(center, BorderLayout.CENTER);
-
+        add(bottom, BorderLayout.SOUTH);
         displayBoard();
 
         // testing button and panel, remove from final
@@ -63,7 +70,6 @@ public class ChessPanel extends JPanel {
         //PLPanel.add(pieceLocation);
         //this.add(PLPanel, BorderLayout.EAST);
         // testing button and panel, remove from final
-
     }
 
     private void displayBoard() {
@@ -72,63 +78,51 @@ public class ChessPanel extends JPanel {
                 if (model.pieceAt(row, col) != null) {
                     if (model.pieceAt(row, col).type().equals("Rook")) {
 
-                        if (model.pieceAt(row, col).player() == Player.WHITE) {    // need to add icons still
-                            //  board[row][col].setText("Rw");
+                        if (model.pieceAt(row, col).player() == Player.WHITE) {
                             board[row][col].setIcon(new ImageIcon("R Rook.png"));
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK) {
-                            //board[row][col].setText("Rb");
                             board[row][col].setIcon(new ImageIcon("B Rook.png"));
                         }
                     }
                     if (model.pieceAt(row, col).type().equals("Knight")) {
                         if (model.pieceAt(row, col).player() == Player.WHITE) {
-                            //board[row][col].setText("Kw");
                             board[row][col].setIcon(new ImageIcon("R Knight.png"));
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK) {
-                            //board[row][col].setText("Kb");
                             board[row][col].setIcon(new ImageIcon("B Knight.png"));
                         }
                     }
                     if (model.pieceAt(row, col).type().equals("Bishop")) {
                         if (model.pieceAt(row, col).player() == Player.WHITE) {
-                            //board[row][col].setText("Bw");
                             board[row][col].setIcon(new ImageIcon("R Bishop.png"));
 
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK) {
-                            //board[row][col].setText("Bb");
                             board[row][col].setIcon(new ImageIcon("B Bishop.png"));
                         }
                     }
                     if (model.pieceAt(row, col).type().equals("King")) {
                         if (model.pieceAt(row, col).player() == Player.WHITE) {
-                            //board[row][col].setText("Kw");
                             board[row][col].setIcon(new ImageIcon("R King.png"));
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK) {
-                            //board[row][col].setText("Kb");
                             board[row][col].setIcon(new ImageIcon("B King.png"));
                         }
                     }
                     if (model.pieceAt(row, col).type().equals("Queen")) {
                         if (model.pieceAt(row, col).player() == Player.WHITE) {
-                            //board[row][col].setText("Qw");
                             board[row][col].setIcon(new ImageIcon("R Queen.png"));
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK) {
-                            //board[row][col].setText("Qb");
                             board[row][col].setIcon(new ImageIcon("B Queen.png"));
                         }
                     }
                     if (model.pieceAt(row, col).type().equals("Pawn")) {
                         if (model.pieceAt(row, col).player() == Player.WHITE) {
-                            //board[row][col].setText("Pw");
                             board[row][col].setIcon(new ImageIcon("R Pawn.png"));
                         }
                         if (model.pieceAt(row, col).player() == Player.BLACK) {
-                            //board[row][col].setText("Pb");
                             board[row][col].setIcon(new ImageIcon("B Pawn.png"));
                         }
                     }
@@ -140,11 +134,7 @@ public class ChessPanel extends JPanel {
         }
     }
 
-
-    // add other helper methods as needed
-
     // inner class that represents action listener for buttons
-
     Boolean firstClick = true;
     Move mover = new Move();
     private class ButtonListener implements ActionListener {
@@ -156,10 +146,18 @@ public class ChessPanel extends JPanel {
             //    JOptionPane.showMessageDialog(null, "" + model.pieceAt(2, 3).player());
             //}
             // testing button
+            if (butNewGame == event.getSource()){
+                model.isComplete();
+            }
+            if (butQuit == event.getSource()){
+                setVisible(false);
+                System.exit(0);
+            }
+
 
             if (firstClick == true) {
                 for (int row = 0; row < model.getNumRows(); row++) {
-                    for (int col = 0; col < model.getNumCol(); col++) {      //Need to figure out how to get move to work.
+                    for (int col = 0; col < model.getNumCol(); col++) {
 
                         if (board[row][col] == event.getSource()) {
                             //JOptionPane.showMessageDialog(null, "first click");
@@ -185,9 +183,9 @@ public class ChessPanel extends JPanel {
                             } catch (NullPointerException e) {
                                 //this is a shitty fix for when Player = null
                                 // FIXME: 3/21/2016 figure out a better way
+                                JOptionPane.showMessageDialog(null, "second click threw null pntr"); //for testing purposes, remove in final
                             }
                             displayBoard();
-
                             return;
                         }
                     }

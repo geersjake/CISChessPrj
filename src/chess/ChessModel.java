@@ -8,16 +8,16 @@ package chess;
  **********************************************************************/
 
 import javax.swing.*;
-import java.util.ArrayList;
 
+/**
+ * Created by tylerfaulk on 2/29/16.
+ */
 public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
     private Player player;
     private int numRows; //height of board
     private int numCol; // width of board
     private boolean firstMove = true; //used to let white go first
-    private ArrayList theDead;
-
 
 
     public ChessModel() {
@@ -49,16 +49,49 @@ public class ChessModel implements IChessModel {
             board[6][col] = new Pawn(player.BLACK);
             board[1][col] = new Pawn(player.WHITE);
         }
-
-        ArrayList<IChessPiece> dead = new ArrayList<>();
-
     }
 
-    public boolean isComplete() {
+    public boolean isComplete() {  //Need to make sure other pieces cant move through pieces before we're able to test if this works correctly
+        Move testMove = new Move();
+        boolean isCheckMate = true;
+        Player testPlayer;
+        if (inCheck(Player.WHITE)){
+            testPlayer = Player.WHITE;
+        }
+        else{
+            testPlayer = Player.BLACK;
+        }
 
-
-        return false;
-        // FIXME: 3/17/2016 step 10
+        for (int row = 0; row < 8; row++){
+            for (int col = 0; col < 8; col++){
+                if (board[row][col] != null && board[row][col].player() == testPlayer) {
+                    testMove.fromRow = row;
+                    testMove.fromColumn = col;
+                    for (int row1 = 0; row1 < 8; row1++){
+                        for (int col1 = 0; col1 < 8; col1++){
+                            testMove.toRow = row1;
+                            testMove.toColumn = col1;
+                            if (isValidMove(testMove)){
+                                board[testMove.toRow][testMove.toColumn] = board[testMove.fromRow][testMove.fromColumn];
+                                board[testMove.fromRow][testMove.fromColumn] = null;
+                                if (!inCheck(testPlayer)){
+                                    isCheckMate = false;
+                                }
+                                board[testMove.fromRow][testMove.fromColumn] = board[testMove.toRow][testMove.toColumn];
+                                board[testMove.toRow][testMove.toColumn] = null;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (isCheckMate == true){
+            JOptionPane.showMessageDialog(null, "CheckMate. Game is over");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Keep going");
+        }
+        return isCheckMate;
     }
 
     public boolean isValidMove(Move move) {
@@ -68,97 +101,91 @@ public class ChessModel implements IChessModel {
             JOptionPane.showMessageDialog(null, "Red Goes First");
             validMove = false; //not necessary
             firstMove = true;
-        }else if ((board[move.fromRow][move.fromColumn].isValidMove(move, board))
-                && (board[move.fromRow][move.fromColumn].player() == getPlayer())) {
+        } else if (board[move.fromRow][move.fromColumn].isValidMove(move, board)) {
             validMove = true;
             firstMove = false;
         }
-
         return validMove;
     }
 
     public void move(Move move) {
-
-        if(board[move.fromRow][move.fromColumn].player() == currentPlayer()) {
+        if (board[move.fromRow][move.fromColumn].player() == currentPlayer()) {
             if (isValidMove(move)) {
-
-                board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
-                board[move.fromRow][move.fromColumn] = null;
-                setPlayer(currentPlayer().next());
-                if(inCheck(player.WHITE))
-                    JOptionPane.showMessageDialog(null, "White is in Check");
-                if(inCheck(player.BLACK))
-                    JOptionPane.showMessageDialog(null, "Black is in Check");
-                //if(pieceAt(move.toRow, move.toColumn) != null)
-                //theDead.add(pieceAt(move.toRow, move.toColumn));
-
-                //if (board[move.fromRow][move.fromColumn].type().equals("Pawn")) {
-                  //  if (move.fromRow == 0 || move.fromRow == 7)
-                    //    this.promotion(move);
-               // }
-
-            } else {
+                if (!inCheck(currentPlayer())) {
+                    board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
+                    board[move.fromRow][move.fromColumn] = null;
+                    setPlayer(currentPlayer().next());
+                    if (inCheck(Player.BLACK) == true) {
+                        JOptionPane.showMessageDialog(null, " BLACK in check");
+                    }
+                    if (inCheck(Player.WHITE) == true) {
+                        JOptionPane.showMessageDialog(null, "WHITE in check");
+                    }
+                }
+                else {
+                    board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
+                    board[move.fromRow][move.fromColumn] = null;
+                    if(inCheck(currentPlayer())){
+                        board[move.fromRow][move.fromColumn] = board[move.toRow][move.toColumn];
+                        board[move.toRow][move.toColumn] = null;
+                        JOptionPane.showMessageDialog(null, "You must move out of check");
+                    }
+                    else{
+                        setPlayer(currentPlayer().next());
+                    }
+                }
+            }
+            else {
                 JOptionPane.showMessageDialog(null, "This is not a valid move");
             }
         }
-        else
-            JOptionPane.showMessageDialog(null, "It is " + getPlayer() + " turn.");
+        else{
+            JOptionPane.showMessageDialog(null, "It is " + currentPlayer() + " turn" );
+        }
     }
-
 
     public boolean inCheck(Player p) {
-//        int[][] possibleMoves = new int[8][8]; // Array of Integers representing board and available moves
-//        // to help determine check. "0" will represent no possible moves
-//        Move checkMove = new Move();                                   // and "1" will represent possible move. Just Theorizing right now...
-//
-//        if (firstMove)
-//            return false;
-//
-//        for (int row = 0; row < 8; row++) {
-//            for (int col = 0; col < 8; col++) {
-//                // if (board[row][col])
-//
-//                if (board[row][col] != null && board[row][col].player() != p) {  //find rook possible moves
-//                    checkMove.fromRow = row;
-//                    checkMove.fromColumn = col;
-//
-//                    for (int row1 = 0; row1 < 8; row1++) {
-//                        for (int col1 = 0; col1 < 8; col1++) {
-//                            checkMove.toRow = row1;
-//                            checkMove.toColumn = col1;
-//                            if (isValidMove(checkMove) == true) {
-//
-//                                possibleMoves[row1][col1] = 1;
-//
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        for (int row2 = 0; row2 < 8; row2++) {
-//            for (int col2 = 0; col2 < 8; col2++) {
-//                if (board[row2][col2].type().equals("King") && board[row2][col2].player() == p ) {
-//                    if (possibleMoves[row2][col2] == 1)
-//                        return true;
-//                    else
-//                        return false;
-//                }
-//            }
-//        }
-           return false;
+        int[][] possibleMoves = new int[8][8]; // Array of Integers representing board and inCheck spaces.
+        Move checkMove = new Move();
+        boolean isKingInCheck = false;
+        if(firstMove)
+            return false;
+
+        for (int row = 0; row < 8; row++){       //searches for pieces on board
+            for ( int col = 0; col < 8; col++){
+               // if (board[row][col])
+
+                if (board[row][col] != null && board[row][col].player() != p) {  //looks for Piece that isn't owned by that person
+                    checkMove.fromRow = row;  //sets a move starting location
+                    checkMove.fromColumn = col;
+                    for (int row1 = 0; row1 < 8; row1++) {  //scans every spot on board and checks if its a valid move
+                        for (int col1 = 0; col1 < 8; col1++) {
+                            checkMove.toRow = row1;
+                            checkMove.toColumn = col1;
+                            if (isValidMove(checkMove) == true) {
+                                possibleMoves[row1][col1] = 1; //If enemy piece can move to that location, it is represented by a 1
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int row2 = 0; row2 < 8; row2++){
+            for ( int col2 = 0; col2 < 8; col2++) {
+                if (board[row2][col2] != null){
+                    if (board[row2][col2].type().equals("King") && board[row2][col2].player() == p){ //Find the King on the board.
+                        if (possibleMoves[row2][col2] == 1){
+                            isKingInCheck = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return isKingInCheck;
+        // FIXME: 3/17/2016 step 9
     }
-
-    public void promotion (Move move){
-
-        //if(theDead == null)
-            if(getPlayer() == Player.WHITE)
-                board[move.toRow][move.toColumn] = new Queen(player.WHITE);
-            else
-                board[move.toRow][move.toColumn] = new Queen(player.BLACK);
-
-    }
-
 
     public Player currentPlayer() {
         return player;

@@ -9,8 +9,6 @@ package chess;
  *
  **********************************************************************/
 
-import javax.swing.*;
-
 /**
  * Created by tylerfaulk on 2/29/16.
  */
@@ -33,23 +31,18 @@ public abstract class ChessPiece implements IChessPiece {
         boolean validMove = false;
         if(move.fromColumn != move.toColumn || move.toRow != move.fromRow){
             if (this == board[move.fromRow][move.fromColumn]) {
+                //prevents players from attacking their own pieces but still lets them hop over eachother
                 try {
-
-                    if (board[move.toRow][move.toColumn].player() == this.owner)
-                        validMove = false;
-
-                    else
+                    if (board[move.toRow][move.toColumn].player() != this.owner) {
                         validMove = true;
-
+                    }
                 } catch (NullPointerException e) {
                     validMove = true;
-
                 }
             }
         }
         return validMove;
 
     }
-
 }
 
