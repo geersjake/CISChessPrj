@@ -241,7 +241,35 @@ public class ChessPanel extends JPanel {
                                 board[mover.fromRow][mover.fromColumn].setBackground(Color.gray);
 
                             displayBoard();
+                            if (model.inCheck(Player.WHITE)){
+                                JOptionPane.showMessageDialog(null, "Red is in Check!");
+                                if (model.isComplete()){
+                                    for (int row1 = 0; row1 < model.getNumRows(); row1++) {
+                                        for (int col1 = 0; col1 < model.getNumCol(); col1++) {
+                                            board[row1][col1].setEnabled(false);
+                                        }
+                                    }
+                                    JOptionPane.showMessageDialog(null, "Checkmate! Game is Over.");
+                                }
+
+
+                            }
+                            if (model.inCheck(Player.BLACK)){
+                                JOptionPane.showMessageDialog(null, "Black is in Check!");
+                                if (model.isComplete()){
+                                    for (int row1 = 0; row1 < model.getNumRows(); row1++) {
+                                        for (int col1 = 0; col1 < model.getNumCol(); col1++) {
+                                            board[row1][col1].setEnabled(false);
+                                        }
+                                    }
+                                    JOptionPane.showMessageDialog(null, "Checkmate! Game is over.");
+                                }
+
+                            }
+                            displayBoard();
+                            //model.isComplete();
                             return;
+                        
                         }
                     }
                 }

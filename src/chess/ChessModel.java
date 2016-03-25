@@ -61,8 +61,8 @@ public class ChessModel implements IChessModel {
         board[0][0] = new Rook(player.WHITE);
         board[0][1] = new Knight(player.WHITE);
         board[0][2] = new Bishop(player.WHITE);
-        board[0][3] = new Queen(player.WHITE);
-        board[0][4] = new King(player.WHITE);
+        board[0][4] = new Queen(player.WHITE);
+        board[0][3] = new King(player.WHITE);
         board[0][5] = new Bishop(player.WHITE);
         board[0][6] = new Knight(player.WHITE);
         board[0][7] = new Rook(player.WHITE);
@@ -70,8 +70,8 @@ public class ChessModel implements IChessModel {
         board[7][0] = new Rook(player.BLACK);
         board[7][1] = new Knight(player.BLACK);
         board[7][2] = new Bishop(player.BLACK);
-        board[7][3] = new Queen(player.BLACK);
-        board[7][4] = new King(player.BLACK);
+        board[7][4] = new Queen(player.BLACK);
+        board[7][3] = new King(player.BLACK);
         board[7][5] = new Bishop(player.BLACK);
         board[7][6] = new Knight(player.BLACK);
         board[7][7] = new Rook(player.BLACK);
@@ -176,12 +176,17 @@ public class ChessModel implements IChessModel {
         IChessPiece[][] testBoard = new IChessPiece[8][8];
         if (board[move.fromRow][move.fromColumn].player() == currentPlayer()) {
             if (isValidMove(move)) {
+                if (board[move.fromRow][move.fromColumn].type().equals("Pawn")
+                        && board[move.fromRow][move.fromColumn].player() == Player.BLACK && move.toRow == 0) {
+                    JOptionPane.showMessageDialog(null, "Please Select a piece to bring back;");
+                }
+                if (board[move.fromRow][move.fromColumn].type().equals("Pawn")
+                        && board[move.fromRow][move.fromColumn].player() == Player.WHITE && move.toRow == 7) {
+                    JOptionPane.showMessageDialog(null, "Please Select a piece to bring back;");
+                }
                 if (!inCheck(currentPlayer())) {
-                    if (board[move.toRow][move.toColumn] != null){
+                    if (board[move.toRow][move.toColumn] != null) {
                         testBoard[move.toRow][move.toColumn] = board[move.toRow][move.toColumn];
-//                        if (board[move.toRow][move.toColumn].player() == Player.BLACK){
-//                            deadBlack.add(board[move.toRow][move.toColumn]);
-//                        }
                     }
                     board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
                     board[move.fromRow][move.fromColumn] = null;
@@ -189,33 +194,32 @@ public class ChessModel implements IChessModel {
                         board[move.fromRow][move.fromColumn] = board[move.toRow][move.toColumn];
                         board[move.toRow][move.toColumn] = testBoard[move.toRow][move.toColumn];
                         JOptionPane.showMessageDialog(null, "You are not allowed to move into check!");
-                    }
-                    else{
+                    } else {
                         setPlayer(currentPlayer().next());
                     }
-                }
-                else {
-                    if (board[move.toRow][move.toColumn] != null){
+                } else {
+                    if (board[move.toRow][move.toColumn] != null) {
                         testBoard[move.toRow][move.toColumn] = board[move.toRow][move.toColumn];
                     }
                     board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
                     board[move.fromRow][move.fromColumn] = null;
-                    if(inCheck(currentPlayer())){
+                    if (inCheck(currentPlayer())) {
                         board[move.fromRow][move.fromColumn] = board[move.toRow][move.toColumn];
                         board[move.toRow][move.toColumn] = testBoard[move.toRow][move.toColumn];
                         JOptionPane.showMessageDialog(null, "You must move out of check");
                     }
-                    if(!inCheck(currentPlayer())){
+                    if (!inCheck(currentPlayer())) {
                         setPlayer(currentPlayer().next());
+
                     }
                 }
-            }
-            else {
+
+
+            } else {
                 JOptionPane.showMessageDialog(null, "This is not a valid move");
             }
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "It is " + currentPlayer() + " turn" );
+        } else {
+            JOptionPane.showMessageDialog(null, "It is " + currentPlayer() + " turn");
         }
     }
 
