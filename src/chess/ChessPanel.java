@@ -46,7 +46,7 @@ public class ChessPanel extends JPanel {
 
 
         center.setLayout(new GridLayout(model.getNumRows(), model.getNumCol()));
-        bottom.setLayout(new GridLayout(1, 3));
+        bottom.setLayout(new GridLayout(2, 2));
         butQuit = new JButton("Quit");
         butQuit.addActionListener(buttonListener);
         butNewGame = new JButton("New Game");
@@ -67,6 +67,9 @@ public class ChessPanel extends JPanel {
 
                 if (count % 2 == 0)
                     board[row][col].setBackground(Color.gray);
+                else
+                    board[row][col].setBackground(Color.white);
+
                 board[row][col].setOpaque(true);
                 board[row][col].setBorderPainted(false);
                 if (!(col == 7))
@@ -208,8 +211,10 @@ public class ChessPanel extends JPanel {
 
                             if(model.pieceAt(mover.fromRow, mover.fromColumn) == null)
                                 JOptionPane.showMessageDialog(null, "Click on a piece.");
-                            else
+                            else {
                                 firstClick = false;
+                                board[mover.fromRow][mover.fromColumn].setBackground(Color.green);
+                            }
 
                             displayBoard();
                             return;
@@ -226,6 +231,12 @@ public class ChessPanel extends JPanel {
                             mover.toRow = row;
                             mover.toColumn = col;
                             model.move(mover);
+
+                            if((mover.fromColumn % 2 == 0 && mover.fromRow % 2 == 0)||(mover.fromColumn % 2 == 1 && mover.fromRow % 2 == 1))
+                                board[mover.fromRow][mover.fromColumn].setBackground(Color.white);
+                            else
+                                board[mover.fromRow][mover.fromColumn].setBackground(Color.gray);
+
                             displayBoard();
                             return;
                         }

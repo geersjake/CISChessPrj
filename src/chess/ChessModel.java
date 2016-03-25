@@ -156,10 +156,10 @@ public class ChessModel implements IChessModel {
                     board[move.fromRow][move.fromColumn] = null;
                     setPlayer(currentPlayer().next());
                     if (inCheck(Player.BLACK) == true) {
-                        JOptionPane.showMessageDialog(null, " BLACK in check");
+                        JOptionPane.showMessageDialog(null, "Black in check");
                     }
                     if (inCheck(Player.WHITE) == true) {
-                        JOptionPane.showMessageDialog(null, "WHITE in check");
+                        JOptionPane.showMessageDialog(null, "Red in check");
                     }
                 }
                 else {
@@ -180,7 +180,10 @@ public class ChessModel implements IChessModel {
             }
         }
         else{
-            JOptionPane.showMessageDialog(null, "It is " + currentPlayer() + " turn" );
+            if(currentPlayer() == Player.WHITE)
+                JOptionPane.showMessageDialog(null, "It is Red's turn" );
+            else
+                JOptionPane.showMessageDialog(null, "It is Blacks's turn" );
         }
     }
 
