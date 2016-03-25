@@ -1,5 +1,7 @@
 package chess;
 
+import com.sun.codemodel.internal.JOp;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -151,7 +153,7 @@ public class ChessPanel extends JPanel {
             }
 
             if (butQuit == event.getSource()) {
-                model.inCheck(Player.BLACK);
+
             }
 
 
@@ -183,6 +185,32 @@ public class ChessPanel extends JPanel {
                             } catch (NullPointerException e) {
                                 //this is a shitty fix for when Player = null
                                 // FIXME: 3/21/2016 figure out a better way
+                            }
+                            displayBoard();
+                            if (model.inCheck(Player.WHITE)){
+                                JOptionPane.showMessageDialog(null, "Red is in Check!");
+                                if (model.isComplete()){
+                                    for (int row1 = 0; row1 < model.getNumRows(); row1++) {
+                                        for (int col1 = 0; col1 < model.getNumCol(); col1++) {
+                                            board[row1][col1].setEnabled(false);
+                                        }
+                                    }
+                                    JOptionPane.showMessageDialog(null, "Checkmate! Game is Over.");
+                                }
+
+
+                            }
+                            if (model.inCheck(Player.BLACK)){
+                                JOptionPane.showMessageDialog(null, "Black is in Check!");
+                                if (model.isComplete()){
+                                    for (int row1 = 0; row1 < model.getNumRows(); row1++) {
+                                        for (int col1 = 0; col1 < model.getNumCol(); col1++) {
+                                            board[row1][col1].setEnabled(false);
+                                        }
+                                    }
+                                    JOptionPane.showMessageDialog(null, "Checkmate! Game is over.");
+                                }
+
                             }
                             displayBoard();
                             //model.isComplete();
