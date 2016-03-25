@@ -4,16 +4,14 @@ import javax.swing.*;
 
 /***********************************************************************
  *
- * Plays Chess
+ * Plays Chess. Initializes the JFrame from Chess
  *
  * @author Jake, Tyler, Jonathan
  * @version 1.0
  *
  **********************************************************************/
 
-/**
- * Created by tylerfaulk on 2/29/16.
- */
+
 public class ChessGUI {
 
     public static void main(String[] args) {

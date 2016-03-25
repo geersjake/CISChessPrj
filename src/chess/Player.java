@@ -2,7 +2,7 @@ package chess;
 
 /***********************************************************************
  *
- * Plays Chess
+ * Swaps between Black and White Player
  *
  * @author Jake, Tyler, Jonathan
  * @version 1.0
@@ -12,11 +12,11 @@ package chess;
 public enum Player {
     BLACK, WHITE;
 
-    /**
-     * Return the {@code Player} whose turn is next.
-     *
-     * @return the {@code Player} whose turn is next
-     */
+/***********************************************************************
+ * Return the {@code Player} whose turn is next.
+ *
+ * @return the {@code Player} whose turn is next
+ **********************************************************************/
     public Player next() {
         return this == BLACK ? WHITE : BLACK;
     }
