@@ -30,6 +30,44 @@ public class Bishop extends ChessPiece {
                 validMove = true;
             }
         }
+
+        int tempCol = move.fromColumn;
+        int tempRow = move.fromRow;
+
+        if(validMove) {
+            while ((tempRow != move.toRow) || (tempCol != move.toColumn)) {
+
+                if (tempRow > move.toRow && tempCol > move.toColumn
+                        && tempCol <= 7 && tempCol >= 0 && tempRow <= 7 && tempRow >= 0) {
+                    tempCol--;
+                    tempRow--;
+                }
+
+                if (tempRow < move.toRow && tempCol < move.toColumn
+                        && tempCol <= 7 && tempCol >= 0 && tempRow <= 7 && tempRow >= 0) {
+                    tempCol++;
+                    tempRow++;
+                }
+
+                if (tempRow > move.toRow && tempCol < move.toColumn
+                        && tempCol <= 7 && tempCol >= 0 && tempRow <= 7 && tempRow >= 0) {
+                    tempRow--;
+                    tempCol++;
+                }
+
+                if (tempRow < move.toRow && tempCol > move.toColumn
+                        && tempCol <= 7 && tempCol >= 0 && tempRow <= 7 && tempRow >= 0) {
+                    tempRow++;
+                    tempCol--;
+                }
+
+                if (!(tempCol == move.toColumn && tempRow == move.toRow)) {
+                    if (board[tempRow][tempCol] != null)
+                        validMove = false;
+                }
+
+            }
+        }
         return validMove;
     }
 }
