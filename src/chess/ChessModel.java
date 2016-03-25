@@ -54,7 +54,7 @@ public class ChessModel implements IChessModel {
         //Instantiate player
         board = new IChessPiece[8][8];
 
-        // TODO: 3/25/2016
+
         deadBlack = new ArrayList<>();
         deadWhite = new ArrayList<>();
 

@@ -215,7 +215,6 @@ public class ChessPanel extends JPanel {
                                 firstClick = false;
                                 board[mover.fromRow][mover.fromColumn].setBackground(Color.green);
                                 //highLight();
-                                // TODO: 3/25/2016  
                             }
 
                             displayBoard();
@@ -277,7 +276,6 @@ public class ChessPanel extends JPanel {
         }
     }
 
-    // TODO: 3/25/2016  
     public void highLight() {
 
         int[][] possibleMoves = new int[8][8]; // Array of Integers representing board and inCheck spaces.
