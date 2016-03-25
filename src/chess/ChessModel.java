@@ -1,5 +1,7 @@
 package chess;
+
 import javax.swing.*;
+import java.util.ArrayList;
 
 /***********************************************************************
  *
@@ -30,6 +32,10 @@ public class ChessModel implements IChessModel {
     //used in castle to keep track if the black king can castle with right
     public boolean ableToCastleBlack77;
 
+    private ArrayList<IChessPiece> deadWhite;
+    private ArrayList<IChessPiece> deadBlack;
+
+
 /***********************************************************************
  * Sets the pieces to the right at the start of a game
  *
@@ -48,6 +54,8 @@ public class ChessModel implements IChessModel {
         player = Player.WHITE; //changed to white
         //Instantiate player
         board = new IChessPiece[8][8];
+        deadBlack = new ArrayList<>();
+        deadWhite = new ArrayList<>();
 
         // adding all of the pieces onto the board
         board[0][0] = new Rook(player.WHITE);
@@ -84,6 +92,7 @@ public class ChessModel implements IChessModel {
     public boolean isComplete() {  //Need to make sure other pieces cant move through pieces before we're able to test if this works correctly
         Move testMove = new Move();
         boolean isCheckMate = true;
+        IChessPiece[][] testBoard = new IChessPiece[8][8];
         Player testPlayer;
         if (inCheck(Player.WHITE)){
             testPlayer = Player.WHITE;
@@ -102,25 +111,40 @@ public class ChessModel implements IChessModel {
                             testMove.toRow = row1;
                             testMove.toColumn = col1;
                             if (isValidMove(testMove)){
-                                board[testMove.toRow][testMove.toColumn] = board[testMove.fromRow][testMove.fromColumn];
-                                board[testMove.fromRow][testMove.fromColumn] = null;
-                                if (!inCheck(testPlayer)){
-                                    isCheckMate = false;
+                                if (board[testMove.toRow][testMove.toColumn] != null ){
+                                    testBoard[testMove.toRow][testMove.toColumn] = board[testMove.toRow][testMove.toColumn];
+
+                                    board[testMove.toRow][testMove.toColumn] = board[testMove.fromRow][testMove.fromColumn];
+                                    board[testMove.fromRow][testMove.fromColumn] = null;
+                                    if (!inCheck(testPlayer)){
+                                        isCheckMate = false;
+
+                                    }
+                                    board[testMove.fromRow][testMove.fromColumn] = board[testMove.toRow][testMove.toColumn];
+                                    board[testMove.toRow][testMove.toColumn] = testBoard[testMove.toRow][testMove.toColumn];
                                 }
-                                board[testMove.fromRow][testMove.fromColumn] = board[testMove.toRow][testMove.toColumn];
-                                board[testMove.toRow][testMove.toColumn] = null;
+                                else{
+                                    board[testMove.toRow][testMove.toColumn] = board[testMove.fromRow][testMove.fromColumn];
+                                    board[testMove.fromRow][testMove.fromColumn] = null;
+                                    if (!inCheck(testPlayer)){
+                                        isCheckMate = false;
+                                    }
+                                    board[testMove.fromRow][testMove.fromColumn] = board[testMove.toRow][testMove.toColumn];
+                                    board[testMove.toRow][testMove.toColumn] = null;
+                                }
+
                             }
                         }
                     }
                 }
             }
         }
-   /*     if (isCheckMate == true){
+        if (isCheckMate == true){
             JOptionPane.showMessageDialog(null, "CheckMate. Game is over");
         }
         else{
             JOptionPane.showMessageDialog(null, "Keep going");
-        }*/
+        }
         return isCheckMate;
     }
 
@@ -149,28 +173,39 @@ public class ChessModel implements IChessModel {
      **********************************************************************/
 
     public void move(Move move) {
+        IChessPiece[][] testBoard = new IChessPiece[8][8];
         if (board[move.fromRow][move.fromColumn].player() == currentPlayer()) {
             if (isValidMove(move)) {
                 if (!inCheck(currentPlayer())) {
+                    if (board[move.toRow][move.toColumn] != null){
+                        testBoard[move.toRow][move.toColumn] = board[move.toRow][move.toColumn];
+//                        if (board[move.toRow][move.toColumn].player() == Player.BLACK){
+//                            deadBlack.add(board[move.toRow][move.toColumn]);
+//                        }
+                    }
                     board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
                     board[move.fromRow][move.fromColumn] = null;
-                    setPlayer(currentPlayer().next());
-                    if (inCheck(Player.BLACK) == true) {
-                        JOptionPane.showMessageDialog(null, "Black in check");
+                    if (inCheck(currentPlayer())) {
+                        board[move.fromRow][move.fromColumn] = board[move.toRow][move.toColumn];
+                        board[move.toRow][move.toColumn] = testBoard[move.toRow][move.toColumn];
+                        JOptionPane.showMessageDialog(null, "You are not allowed to move into check!");
                     }
-                    if (inCheck(Player.WHITE) == true) {
-                        JOptionPane.showMessageDialog(null, "Red in check");
+                    else{
+                        setPlayer(currentPlayer().next());
                     }
                 }
                 else {
+                    if (board[move.toRow][move.toColumn] != null){
+                        testBoard[move.toRow][move.toColumn] = board[move.toRow][move.toColumn];
+                    }
                     board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
                     board[move.fromRow][move.fromColumn] = null;
                     if(inCheck(currentPlayer())){
                         board[move.fromRow][move.fromColumn] = board[move.toRow][move.toColumn];
-                        board[move.toRow][move.toColumn] = null;
+                        board[move.toRow][move.toColumn] = testBoard[move.toRow][move.toColumn];
                         JOptionPane.showMessageDialog(null, "You must move out of check");
                     }
-                    else{
+                    if(!inCheck(currentPlayer())){
                         setPlayer(currentPlayer().next());
                     }
                 }
@@ -180,10 +215,7 @@ public class ChessModel implements IChessModel {
             }
         }
         else{
-            if(currentPlayer() == Player.WHITE)
-                JOptionPane.showMessageDialog(null, "It is Red's turn" );
-            else
-                JOptionPane.showMessageDialog(null, "It is Blacks's turn" );
+            JOptionPane.showMessageDialog(null, "It is " + currentPlayer() + " turn" );
         }
     }
 

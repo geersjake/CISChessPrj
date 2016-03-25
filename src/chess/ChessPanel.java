@@ -31,6 +31,8 @@ public class ChessPanel extends JPanel {
     //The button listener to figure out what button
     // is pushed and what logic to call
     private ButtonListener buttonListener = new ButtonListener();
+    //Panel holding game information
+    private JPanel rPanel;
 
 /***********************************************************************
  *
@@ -82,6 +84,7 @@ public class ChessPanel extends JPanel {
         add(new JLabel("Chess Game"), BorderLayout.NORTH);
         add(center, BorderLayout.CENTER);
         add(bottom, BorderLayout.SOUTH);
+        //add(rPanel, BorderLayout.EAST);
         displayBoard();
     }
 
@@ -238,16 +241,6 @@ public class ChessPanel extends JPanel {
                                 board[mover.fromRow][mover.fromColumn].setBackground(Color.gray);
 
                             displayBoard();
-                            if (model.isComplete()) {
-                                JOptionPane.showMessageDialog(null, "Game Over");
-                                for (int r = 0; row < model.getNumRows(); row++) {
-                                    for (int c = 0; c < model.getNumCol(); col++) {
-                                        //iCell = game.getCell(r, c);
-                                        board[r][c].setEnabled(false);
-                                    }
-                                }
-                                displayBoard();
-                            }
                             return;
                         }
                     }
