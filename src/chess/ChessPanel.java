@@ -185,6 +185,7 @@ public class ChessPanel extends JPanel {
                                 // FIXME: 3/21/2016 figure out a better way
                             }
                             displayBoard();
+                            //model.isComplete();
                             return;
                         }
                     }

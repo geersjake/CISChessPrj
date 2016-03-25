@@ -16,9 +16,6 @@ public class Pawn extends ChessPiece {
         super(player);
     }
 
-
-    private boolean firstMove = true;
-
     @Override
     public String type() {
         return "Pawn";
@@ -66,11 +63,4 @@ public class Pawn extends ChessPiece {
         return validMove;
     }
 
-    public boolean isFirstMove() {
-        return firstMove;
-    }
-
-    public void setFirstMove(boolean firstMove) {
-        this.firstMove = firstMove;
-    }
 }

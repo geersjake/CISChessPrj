@@ -55,7 +55,6 @@ public class ChessModel implements IChessModel {
         Move testMove = new Move();
         boolean isCheckMate = true;
         IChessPiece[][] testBoard = new IChessPiece[8][8];
-        testBoard = board;
         Player testPlayer;
         if (inCheck(Player.WHITE)){
             testPlayer = Player.WHITE;
@@ -66,7 +65,7 @@ public class ChessModel implements IChessModel {
 
         for (int row = 0; row < 8; row++){
             for (int col = 0; col < 8; col++){
-                if (testBoard[row][col] != null && testBoard[row][col].player() == testPlayer) {
+                if (board[row][col] != null && board[row][col].player() == testPlayer) {
                     testMove.fromRow = row;
                     testMove.fromColumn = col;
                     for (int row1 = 0; row1 < 8; row1++){
@@ -74,13 +73,28 @@ public class ChessModel implements IChessModel {
                             testMove.toRow = row1;
                             testMove.toColumn = col1;
                             if (isValidMove(testMove)){
-                                testBoard[testMove.toRow][testMove.toColumn] = testBoard[testMove.fromRow][testMove.fromColumn];
-                                testBoard[testMove.fromRow][testMove.fromColumn] = null;
-                                if (!inCheck(testPlayer)){
-                                    isCheckMate = false;
+                                if (board[testMove.toRow][testMove.toColumn] != null ){
+                                    testBoard[testMove.toRow][testMove.toColumn] = board[testMove.toRow][testMove.toColumn];
+
+                                    board[testMove.toRow][testMove.toColumn] = board[testMove.fromRow][testMove.fromColumn];
+                                    board[testMove.fromRow][testMove.fromColumn] = null;
+                                    if (!inCheck(testPlayer)){
+                                        isCheckMate = false;
+
+                                    }
+                                    board[testMove.fromRow][testMove.fromColumn] = board[testMove.toRow][testMove.toColumn];
+                                    board[testMove.toRow][testMove.toColumn] = testBoard[testMove.toRow][testMove.toColumn];
                                 }
-                                testBoard[testMove.fromRow][testMove.fromColumn] = testBoard[testMove.toRow][testMove.toColumn];
-                                testBoard[testMove.toRow][testMove.toColumn] = null;
+                                else{
+                                    board[testMove.toRow][testMove.toColumn] = board[testMove.fromRow][testMove.fromColumn];
+                                    board[testMove.fromRow][testMove.fromColumn] = null;
+                                    if (!inCheck(testPlayer)){
+                                        isCheckMate = false;
+                                    }
+                                    board[testMove.fromRow][testMove.fromColumn] = board[testMove.toRow][testMove.toColumn];
+                                    board[testMove.toRow][testMove.toColumn] = null;
+                                }
+
                             }
                         }
                     }
