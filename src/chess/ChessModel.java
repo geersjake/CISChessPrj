@@ -15,8 +15,6 @@ import java.util.*;
  */
 public class ChessModel implements IChessModel {
     private IChessPiece[][] board;
-    private ArrayList<IChessPiece> deadWhite;
-    private ArrayList<IChessPiece> deadBlack;
     private Player player;
     private int numRows; //height of board
     private int numCol; // width of board
@@ -29,8 +27,6 @@ public class ChessModel implements IChessModel {
         player = Player.WHITE; //changed to white
         //Instantiate player
         board = new IChessPiece[8][8];
-        deadBlack = new ArrayList<>();
-        deadWhite = new ArrayList<>();
 
         board[0][0] = new Rook(player.WHITE);     // adding all of the pieces onto the board
         board[0][1] = new Knight(player.WHITE);
@@ -61,39 +57,37 @@ public class ChessModel implements IChessModel {
         boolean isCheckMate = true;
         IChessPiece[][] testBoard = new IChessPiece[8][8];
         Player testPlayer;
-        if (inCheck(Player.WHITE)){
+        if (inCheck(Player.WHITE)) {
             testPlayer = Player.WHITE;
-        }
-        else{
+        } else {
             testPlayer = Player.BLACK;
         }
 
-        for (int row = 0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
                 if (board[row][col] != null && board[row][col].player() == testPlayer) {
                     testMove.fromRow = row;
                     testMove.fromColumn = col;
-                    for (int row1 = 0; row1 < 8; row1++){
-                        for (int col1 = 0; col1 < 8; col1++){
+                    for (int row1 = 0; row1 < 8; row1++) {
+                        for (int col1 = 0; col1 < 8; col1++) {
                             testMove.toRow = row1;
                             testMove.toColumn = col1;
-                            if (isValidMove(testMove)){
-                                if (board[testMove.toRow][testMove.toColumn] != null ){
+                            if (isValidMove(testMove)) {
+                                if (board[testMove.toRow][testMove.toColumn] != null) {
                                     testBoard[testMove.toRow][testMove.toColumn] = board[testMove.toRow][testMove.toColumn];
 
                                     board[testMove.toRow][testMove.toColumn] = board[testMove.fromRow][testMove.fromColumn];
                                     board[testMove.fromRow][testMove.fromColumn] = null;
-                                    if (!inCheck(testPlayer)){
+                                    if (!inCheck(testPlayer)) {
                                         isCheckMate = false;
 
                                     }
                                     board[testMove.fromRow][testMove.fromColumn] = board[testMove.toRow][testMove.toColumn];
                                     board[testMove.toRow][testMove.toColumn] = testBoard[testMove.toRow][testMove.toColumn];
-                                }
-                                else{
+                                } else {
                                     board[testMove.toRow][testMove.toColumn] = board[testMove.fromRow][testMove.fromColumn];
                                     board[testMove.fromRow][testMove.fromColumn] = null;
-                                    if (!inCheck(testPlayer)){
+                                    if (!inCheck(testPlayer)) {
                                         isCheckMate = false;
                                     }
                                     board[testMove.fromRow][testMove.fromColumn] = board[testMove.toRow][testMove.toColumn];
@@ -106,10 +100,9 @@ public class ChessModel implements IChessModel {
                 }
             }
         }
-        if (isCheckMate == true){
+        if (isCheckMate == true) {
             JOptionPane.showMessageDialog(null, "CheckMate. Game is over");
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Keep going");
         }
         return isCheckMate;
@@ -133,12 +126,17 @@ public class ChessModel implements IChessModel {
         IChessPiece[][] testBoard = new IChessPiece[8][8];
         if (board[move.fromRow][move.fromColumn].player() == currentPlayer()) {
             if (isValidMove(move)) {
+                if (board[move.fromRow][move.fromColumn].type().equals("Pawn")
+                        && board[move.fromRow][move.fromColumn].player() == Player.BLACK && move.toRow == 0) {
+                    JOptionPane.showMessageDialog(null, "Please Select a piece to bring back;");
+                }
+                if (board[move.fromRow][move.fromColumn].type().equals("Pawn")
+                        && board[move.fromRow][move.fromColumn].player() == Player.WHITE && move.toRow == 7) {
+                    JOptionPane.showMessageDialog(null, "Please Select a piece to bring back;");
+                }
                 if (!inCheck(currentPlayer())) {
-                    if (board[move.toRow][move.toColumn] != null){
+                    if (board[move.toRow][move.toColumn] != null) {
                         testBoard[move.toRow][move.toColumn] = board[move.toRow][move.toColumn];
-//                        if (board[move.toRow][move.toColumn].player() == Player.BLACK){
-//                            deadBlack.add(board[move.toRow][move.toColumn]);
-//                        }
                     }
                     board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
                     board[move.fromRow][move.fromColumn] = null;
@@ -146,46 +144,47 @@ public class ChessModel implements IChessModel {
                         board[move.fromRow][move.fromColumn] = board[move.toRow][move.toColumn];
                         board[move.toRow][move.toColumn] = testBoard[move.toRow][move.toColumn];
                         JOptionPane.showMessageDialog(null, "You are not allowed to move into check!");
-                    }
-                    else{
+                    } else {
                         setPlayer(currentPlayer().next());
                     }
-                }
-                else {
-                    if (board[move.toRow][move.toColumn] != null){
+                } else {
+                    if (board[move.toRow][move.toColumn] != null) {
                         testBoard[move.toRow][move.toColumn] = board[move.toRow][move.toColumn];
                     }
                     board[move.toRow][move.toColumn] = board[move.fromRow][move.fromColumn];
                     board[move.fromRow][move.fromColumn] = null;
-                    if(inCheck(currentPlayer())){
+                    if (inCheck(currentPlayer())) {
                         board[move.fromRow][move.fromColumn] = board[move.toRow][move.toColumn];
                         board[move.toRow][move.toColumn] = testBoard[move.toRow][move.toColumn];
                         JOptionPane.showMessageDialog(null, "You must move out of check");
                     }
-                    if(!inCheck(currentPlayer())){
+                    if (!inCheck(currentPlayer())) {
                         setPlayer(currentPlayer().next());
+
                     }
                 }
-            }
-            else {
+
+
+            } else {
                 JOptionPane.showMessageDialog(null, "This is not a valid move");
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "It is " + currentPlayer() + " turn");
         }
-        else{
-            JOptionPane.showMessageDialog(null, "It is " + currentPlayer() + " turn" );
-        }
+
+
     }
 
     public boolean inCheck(Player p) {
         int[][] possibleMoves = new int[8][8]; // Array of Integers representing board and inCheck spaces.
         Move checkMove = new Move();
         boolean isKingInCheck = false;
-        if(firstMove)
+        if (firstMove)
             return false;
 
-        for (int row = 0; row < 8; row++){       //searches for pieces on board
-            for ( int col = 0; col < 8; col++){
-               // if (board[row][col])
+        for (int row = 0; row < 8; row++) {       //searches for pieces on board
+            for (int col = 0; col < 8; col++) {
+                // if (board[row][col])
 
                 if (board[row][col] != null && board[row][col].player() != p) {  //looks for Piece that isn't owned by that person
                     checkMove.fromRow = row;  //sets a move starting location
@@ -203,11 +202,11 @@ public class ChessModel implements IChessModel {
             }
         }
 
-        for (int row2 = 0; row2 < 8; row2++){
-            for ( int col2 = 0; col2 < 8; col2++) {
-                if (board[row2][col2] != null){
-                    if (board[row2][col2].type().equals("King") && board[row2][col2].player() == p){ //Find the King on the board.
-                        if (possibleMoves[row2][col2] == 1){
+        for (int row2 = 0; row2 < 8; row2++) {
+            for (int col2 = 0; col2 < 8; col2++) {
+                if (board[row2][col2] != null) {
+                    if (board[row2][col2].type().equals("King") && board[row2][col2].player() == p) { //Find the King on the board.
+                        if (possibleMoves[row2][col2] == 1) {
                             isKingInCheck = true;
                         }
                     }
@@ -267,5 +266,4 @@ public class ChessModel implements IChessModel {
     public void setBoard(IChessPiece[][] board) {
         this.board = board;
     }
-
 }
