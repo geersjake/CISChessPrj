@@ -186,6 +186,16 @@ public class ChessPanel extends JPanel {
                                 JOptionPane.showMessageDialog(null, "second click threw null pntr"); //for testing purposes, remove in final
                             }
                             displayBoard();
+                            if (model.isComplete()) {
+                                JOptionPane.showMessageDialog(null, "Game Over");
+                                for (int r = 0; row < model.getNumRows(); row++) {
+                                    for (int c = 0; c < model.getNumCol(); col++) {
+                                        //iCell = game.getCell(r, c);
+                                        board[r][c].setEnabled(false);
+                                    }
+                                }
+                                displayBoard();
+                            }
                             return;
                         }
                     }

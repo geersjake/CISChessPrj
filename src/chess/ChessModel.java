@@ -85,12 +85,12 @@ public class ChessModel implements IChessModel {
                 }
             }
         }
-        if (isCheckMate == true){
+   /*     if (isCheckMate == true){
             JOptionPane.showMessageDialog(null, "CheckMate. Game is over");
         }
         else{
             JOptionPane.showMessageDialog(null, "Keep going");
-        }
+        }*/
         return isCheckMate;
     }
 
