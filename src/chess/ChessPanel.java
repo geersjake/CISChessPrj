@@ -149,6 +149,10 @@ public class ChessPanel extends JPanel {
             if (butNewGame == event.getSource()){
                 model.isComplete();
             }
+            if (butQuit == event.getSource()){
+                setVisible(false);
+                System.exit(0);
+            }
 
 
             if (firstClick == true) {
@@ -179,6 +183,7 @@ public class ChessPanel extends JPanel {
                             } catch (NullPointerException e) {
                                 //this is a shitty fix for when Player = null
                                 // FIXME: 3/21/2016 figure out a better way
+                                JOptionPane.showMessageDialog(null, "second click threw null pntr"); //for testing purposes, remove in final
                             }
                             displayBoard();
                             return;
